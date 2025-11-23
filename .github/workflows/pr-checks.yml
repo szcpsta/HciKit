@@ -38,3 +38,12 @@ jobs:
 
       - name: Test
         run: dotnet test --no-build --configuration Release
+    
+  ci-pass:
+    name: CI Pass
+    needs: ci
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: All matrix jobs succeeded
+        run: echo "All jobs passed on all OSes."
