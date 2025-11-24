@@ -14,7 +14,39 @@ public class BtSnoopReaderTests
     }
 
     [Fact]
-    public async Task PacketCountTest()
+    public void Dispose_CanBeCalledMultipleTimes()
+    {
+        var reader = new BtSnoopReader(new MemoryStream());
+
+        reader.Dispose();
+        reader.Dispose(); // No exception expected
+    }
+
+    [Fact]
+    public void Dispose_ShouldCloseStream_WhenLeaveOpenIsFalse()
+    {
+        var ms = new MemoryStream();
+        var reader = new BtSnoopReader(ms, leaveOpen: false);
+
+        reader.Dispose();
+
+        Assert.Throws<ObjectDisposedException>(() => ms.Position);
+    }
+
+    [Fact]
+    public void Dispose_ShouldNotCloseStream_WhenLeaveOpenIsTrue()
+    {
+        var ms = new MemoryStream();
+        var reader = new BtSnoopReader(ms, leaveOpen: true);
+
+        reader.Dispose();
+
+        // Should still work
+        ms.Position = 0;
+    }
+
+    [Fact]
+    public async Task PacketCountAndTimestampTest()
     {
         byte[] btSnoop =
        {

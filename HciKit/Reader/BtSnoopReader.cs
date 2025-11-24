@@ -6,11 +6,12 @@ using System.Text;
 
 namespace HciKit.Reader;
 
-public class BtSnoopReader(Stream stream, bool leaveOpen = false) : IAsyncDisposable
+public sealed class BtSnoopReader : IDisposable, IAsyncDisposable
 {
     public readonly record struct BtSnoopRecord(long Position, long TimestampMicros, ReadOnlyMemory<byte> Payload);
 
-    private readonly Stream _stream = stream ?? throw new ArgumentNullException(nameof(stream));
+    private readonly Stream _stream;
+    private readonly bool _leaveOpen;
 
     private const string IdentificationPattern = "btsnoop\0";
     private const uint VersionNumber = 1;
@@ -19,6 +20,8 @@ public class BtSnoopReader(Stream stream, bool leaveOpen = false) : IAsyncDispos
     private const long BtSnoopEpoch1970Us = 0x00DCDDB30F2F8000;
     // Bluetooth Epoch
     private const long BtSnoopEpoch2000Us = 0x00E03AB44A676000;
+
+    private bool _disposed;
 
     private enum FileHeaderOffset
     {
@@ -58,6 +61,12 @@ public class BtSnoopReader(Stream stream, bool leaveOpen = false) : IAsyncDispos
         precedence.
         */
         Command = 1,    // Command flag 0 = Data, 1 = Command/Event
+    }
+
+    public BtSnoopReader(Stream? stream, bool leaveOpen = false)
+    {
+        _stream = stream ?? throw new ArgumentNullException(nameof(stream));
+        _leaveOpen = leaveOpen;
     }
 
     public async IAsyncEnumerable<BtSnoopRecord> ReadAsync(
@@ -121,9 +130,32 @@ public class BtSnoopReader(Stream stream, bool leaveOpen = false) : IAsyncDispos
                datalinkCode == DatalinkCode.H4;
     }
 
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
+
+    private void Dispose(bool disposing)
+    {
+        if (_disposed) return;
+        _disposed = true;
+
+        if (disposing)
+        {
+            if (!_leaveOpen)
+                _stream.Dispose();
+        }
+    }
+
     public async ValueTask DisposeAsync()
     {
-        if (!leaveOpen)
+        if (_disposed) return;
+        _disposed = true;
+
+        if (!_leaveOpen)
             await _stream.DisposeAsync().ConfigureAwait(false);
+
+        GC.SuppressFinalize(this);
     }
 }
