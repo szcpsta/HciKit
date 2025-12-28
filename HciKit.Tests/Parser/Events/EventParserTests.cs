@@ -6,7 +6,7 @@ using HciKit.Parser.Events;
 
 namespace HciKit.Tests.Parser.Events;
 
-public class EventParserTest
+public class EventParserTests
 {
     [Fact]
     public void ParseEventTest()

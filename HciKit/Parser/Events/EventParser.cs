@@ -21,10 +21,18 @@ internal class EventParser
             throw new InvalidDataException();
         }
 
-        return new HciEvent();
+        HciSpanReader r = new HciSpanReader(p);
+        r.Skip((int)Offset.Parameter);
+
+        return GetEventCode(p) switch
+        {
+            HciEventCodes.CommandComplete => CommandCompleteEvent.Parse(ref r),
+            HciEventCodes.CommandStatus => CommandStatusEvent.Parse(ref r),
+            _ => throw new InvalidDataException()
+        };
     }
 
-    private static ushort GetEventCode(ReadOnlySpan<byte> p)
+    private static byte GetEventCode(ReadOnlySpan<byte> p)
         => p[(byte)Offset.EventCode];
 
     private static byte GetParameterTotalLength(ReadOnlySpan<byte> p)
