@@ -9,3 +9,34 @@ public abstract class HciPacket
 
     public override string ToString() => Name;
 }
+
+public sealed class UnknownHciPacket : HciPacket
+{
+    public HciUnknownReason Reason { get; }
+    public HciPacketType PacketType { get; }
+    public ushort? Opcode { get; }
+    public byte? EventCode { get; }
+
+    public UnknownHciPacket(
+        HciUnknownReason reason,
+        HciPacketType packetType,
+        ushort? opcode = null,
+        byte? eventCode = null)
+    {
+        Reason = reason;
+        PacketType = packetType;
+        Opcode = opcode;
+        EventCode = eventCode;
+    }
+
+    public override string Name => "Unknown";
+}
+
+public enum HciUnknownReason
+{
+    UnsupportedPacketType,
+    UnsupportedOpcode,
+    UnsupportedEventCode,
+    InvalidLength,
+    UnknownVendorSpecific,
+}

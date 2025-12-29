@@ -8,7 +8,7 @@ namespace HciKit.Tests.Parser;
 public class HciParserTests
 {
     [Fact]
-    public void NotSupportedExceptionTest()
+    public void UnknownHciPacketTest()
     {
         var parser = new HciParser();
 
@@ -21,9 +21,12 @@ public class HciParserTests
         ];
         byte[] eventPacket = [0x4, 0xe, 0x4, 0x1, 0x3, 0xc, 0x0];
 
-        Assert.Throws<NotSupportedException>(() => parser.Parse(aclPacket));
+        var result = parser.Parse(aclPacket) as UnknownHciPacket;
 
-        parser.Parse(commandPacket);
-        parser.Parse(eventPacket);
+        Assert.NotNull(result);
+        Assert.Equal(HciUnknownReason.UnsupportedPacketType, result.Reason);
+
+        Assert.False(parser.Parse(commandPacket) is UnknownHciPacket);
+        Assert.False(parser.Parse(eventPacket) is UnknownHciPacket);
     }
 }
