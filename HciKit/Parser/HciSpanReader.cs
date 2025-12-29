@@ -4,7 +4,7 @@
 using System.Buffers.Binary;
 using System.Runtime.CompilerServices;
 
-namespace HciKit.Parser.Events;
+namespace HciKit.Parser;
 
 public ref struct HciSpanReader
 {
