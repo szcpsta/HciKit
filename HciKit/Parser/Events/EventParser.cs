@@ -14,21 +14,22 @@ internal class EventParser
         Parameter = 2,
     }
 
-    public static HciEvent Parse(ReadOnlySpan<byte> p)
+    public static HciPacket Parse(ReadOnlySpan<byte> p)
     {
         if (p.Length != (byte)Offset.Parameter + GetParameterTotalLength(p))
         {
-            throw new InvalidDataException();
+            return new UnknownHciPacket(HciUnknownReason.InvalidLength, HciPacketType.Event);
         }
 
         HciSpanReader r = new HciSpanReader(p);
         r.Skip((int)Offset.Parameter);
 
-        return GetEventCode(p) switch
+        var eventCode = GetEventCode(p);
+        return eventCode switch
         {
             HciEventCodes.CommandComplete => CommandCompleteEvent.Parse(ref r),
             HciEventCodes.CommandStatus => CommandStatusEvent.Parse(ref r),
-            _ => throw new InvalidDataException()
+            _ => new UnknownHciPacket(HciUnknownReason.UnsupportedEventCode, HciPacketType.Event, eventCode)
         };
     }
 

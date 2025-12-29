@@ -14,11 +14,11 @@ internal class CommandParser
         Parameter = 3,
     }
 
-    public static HciCommand Parse(ReadOnlySpan<byte> p)
+    public static HciPacket Parse(ReadOnlySpan<byte> p)
     {
         if (p.Length != (byte)Offset.Parameter + GetParameterTotalLength(p))
         {
-            throw new InvalidDataException();
+            return new UnknownHciPacket(HciUnknownReason.InvalidLength, HciPacketType.Command);
         }
 
         return new HciCommand();

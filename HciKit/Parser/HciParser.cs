@@ -18,11 +18,12 @@ public class HciParser
 
     public HciPacket Parse(ReadOnlySpan<byte> packet)
     {
-        return GetPacketType(packet) switch
+        var packetType = GetPacketType(packet);
+        return packetType switch
         {
             HciPacketType.Command => CommandParser.Parse(GetParameter(packet)),
             HciPacketType.Event => EventParser.Parse(GetParameter(packet)),
-            _ => throw new NotSupportedException()
+            _ => new UnknownHciPacket(HciUnknownReason.UnsupportedPacketType, packetType)
         };
     }
 
