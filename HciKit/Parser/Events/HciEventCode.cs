@@ -12,6 +12,12 @@ public readonly record struct HciEventCode(byte Value)
 
 internal static class HciEventCodes
 {
+    public const byte InquiryComplete = 0x01;
+    public const byte InquiryResult = 0x02;
+    public const byte ConnectionComplete = 0x03;
+    public const byte ConnectionRequest = 0x04;
+    public const byte DisconnectionComplete = 0x05;
+
     public const byte CommandComplete = 0x0E;
     public const byte CommandStatus = 0x0F;
 }

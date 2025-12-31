@@ -27,6 +27,12 @@ internal class EventParser
         var eventCode = GetEventCode(p);
         return eventCode switch
         {
+            HciEventCodes.InquiryComplete => InquiryCompleteEvent.Parse(ref r),
+            HciEventCodes.InquiryResult => InquiryResultEvent.Parse(ref r),
+            HciEventCodes.ConnectionComplete => ConnectionCompleteEvent.Parse(ref r),
+            HciEventCodes.ConnectionRequest => ConnectionRequestEvent.Parse(ref r),
+            HciEventCodes.DisconnectionComplete => DisconnectionCompleteEvent.Parse(ref r),
+
             HciEventCodes.CommandComplete => CommandCompleteEvent.Parse(ref r),
             HciEventCodes.CommandStatus => CommandStatusEvent.Parse(ref r),
             _ => new UnknownHciPacket(HciUnknownReason.UnsupportedEventCode, HciPacketType.Event, eventCode)
