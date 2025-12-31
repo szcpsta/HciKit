@@ -104,6 +104,19 @@ public ref struct HciSpanReader
     // ----------------------------
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public uint ReadU24()
+    {
+        Ensure(3);
+        uint b0 = _span[0];
+        uint b1 = _span[1];
+        uint b2 = _span[2];
+        _span = _span[3..];
+
+        // Little-endian in buffer: b0 is LSB.
+        return (b0) | (b1 << 8) | (b2 << 16);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ulong ReadU48()
     {
         Ensure(6);
