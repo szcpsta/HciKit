@@ -5,20 +5,25 @@ namespace HciKit.Parser.Events;
 
 public abstract class HciEvent : HciPacket
 {
-    public abstract HciEventCode EventCode { get; }
+    public HciEventCode EventCode { get; }
+
+    protected HciEvent(HciEventCode eventCode)
+    {
+        EventCode = eventCode;
+    }
+
     public override string Name => "Event";
 }
 
 // 7.7.14 Command Complete event
 public sealed class CommandCompleteEvent : HciEvent
 {
-    public override HciEventCode EventCode => new(HciEventCodes.CommandComplete);
-
-    public byte NumHciCommandPackets;
-    public ushort CommandOpcode;
-    public byte[] ReturnParameters;
+    public byte NumHciCommandPackets { get; }
+    public ushort CommandOpcode { get; }
+    public byte[] ReturnParameters { get; }
 
     public CommandCompleteEvent(byte numHciCommandPackets, ushort commandOpcode, byte[] returnParameters)
+        : base(new(HciEventCodes.CommandComplete))
     {
         NumHciCommandPackets = numHciCommandPackets;
         CommandOpcode = commandOpcode;
@@ -34,13 +39,12 @@ public sealed class CommandCompleteEvent : HciEvent
 // 7.7.15 Command Status event
 public sealed class CommandStatusEvent : HciEvent
 {
-    public override HciEventCode EventCode => new(HciEventCodes.CommandStatus);
-
-    public byte Status;
-    public byte NumHciCommandPackets;
-    public ushort CommandOpcode;
+    public byte Status { get; }
+    public byte NumHciCommandPackets { get; }
+    public ushort CommandOpcode { get; }
 
     public CommandStatusEvent(byte status, byte numHciCommandPackets, ushort commandOpcode)
+        : base(new HciEventCode(HciEventCodes.CommandStatus))
     {
         Status = status;
         NumHciCommandPackets = numHciCommandPackets;
