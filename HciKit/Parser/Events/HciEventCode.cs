@@ -17,7 +17,16 @@ internal static class HciEventCodes
     public const byte ConnectionComplete = 0x03;
     public const byte ConnectionRequest = 0x04;
     public const byte DisconnectionComplete = 0x05;
-
+    public const byte AuthenticationComplete = 0x06;
+    public const byte RemoteNameRequestComplete = 0x07;
+    public const byte EncryptionChangeV1 = 0x08;
+    public const byte ChangeConnectionLinkKeyComplete = 0x09;
+    public const byte LinkKeyTypeChanged = 0x0A;
+    public const byte ReadRemoteSupportedFeaturesComplete = 0x0B;
+    public const byte ReadRemoteVersionInformationComplete = 0x0C;
+    public const byte QoSSetupComplete = 0x0D;
     public const byte CommandComplete = 0x0E;
     public const byte CommandStatus = 0x0F;
+
+    public const byte EncryptionChangeV2 = 0x59;
 }
