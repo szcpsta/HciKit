@@ -9,7 +9,7 @@ public class SamsungEvent : HciEvent
     {
     }
 
-    public static SamsungEvent Parse(BinaryReader reader)
+    public static SamsungEvent Parse(ref HciSpanReader r)
     {
         return new SamsungEvent();
     }

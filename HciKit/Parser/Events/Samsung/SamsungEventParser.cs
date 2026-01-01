@@ -9,6 +9,6 @@ public class SamsungEventParser : IVendorSpecificEventParser
 
     public HciPacket Parse(ref HciSpanReader r)
     {
-        return new SamsungEvent();
+        return SamsungEvent.Parse(ref r);
     }
 }
