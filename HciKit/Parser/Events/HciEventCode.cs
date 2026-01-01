@@ -5,7 +5,7 @@ namespace HciKit.Parser.Events;
 
 public readonly record struct HciEventCode(byte Value)
 {
-    public bool IsVendorSpecific => Value == 0xFF;
+    public bool IsVendorSpecific => Value == HciEventCodes.VendorSpecific;
 
     public override string ToString() => $"0x{Value:X4}";
 }
@@ -29,4 +29,6 @@ internal static class HciEventCodes
     public const byte CommandStatus = 0x0F;
 
     public const byte EncryptionChangeV2 = 0x59;
+
+    public const byte VendorSpecific = 0xFF;
 }

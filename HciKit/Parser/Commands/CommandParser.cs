@@ -14,7 +14,7 @@ internal class CommandParser
         Parameter = 3,
     }
 
-    public static HciPacket Parse(ReadOnlySpan<byte> p)
+    public HciPacket Parse(ReadOnlySpan<byte> p)
     {
         if (p.Length != (byte)Offset.Parameter + GetParameterTotalLength(p))
         {

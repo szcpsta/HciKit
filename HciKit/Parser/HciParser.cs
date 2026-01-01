@@ -16,13 +16,16 @@ public class HciParser
         Parameter = 1,
     }
 
+    private readonly CommandParser _commandParser = new CommandParser();
+    private readonly EventParser _eventParser = new EventParser();
+
     public HciPacket Parse(ReadOnlySpan<byte> packet)
     {
         var packetType = GetPacketType(packet);
         return packetType switch
         {
-            HciPacketType.Command => CommandParser.Parse(GetParameter(packet)),
-            HciPacketType.Event => EventParser.Parse(GetParameter(packet)),
+            HciPacketType.Command => _commandParser.Parse(GetParameter(packet)),
+            HciPacketType.Event => _eventParser.Parse(GetParameter(packet)),
             _ => new UnknownHciPacket(HciUnknownReason.UnsupportedPacketType, packetType)
         };
     }
