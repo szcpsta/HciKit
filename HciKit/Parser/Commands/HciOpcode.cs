@@ -7,8 +7,8 @@ public readonly record struct HciOpcode(ushort Value)
 {
     public byte Ogf => (byte)((Value >> 10) & 0x3F);
     public ushort Ocf => (ushort)(Value & 0x03FF);
-
     public bool IsVendorSpecific => Ogf == 0x3F;
+
     public override string ToString() => $"0x{Value:X4} (OGF={Ogf}, OCF={Ocf})";
 }
 
