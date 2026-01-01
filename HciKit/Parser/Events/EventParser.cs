@@ -1,7 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Buffers.Binary;
+using HciKit.Parser.Events.Samsung;
 
 namespace HciKit.Parser.Events;
 
@@ -13,6 +13,8 @@ internal class EventParser
         ParameterTotalLength = 1,
         Parameter = 2,
     }
+
+    private readonly IVendorSpecificEventParser _vseParser = new SamsungEventParser();
 
     public HciPacket Parse(ReadOnlySpan<byte> p)
     {
@@ -44,6 +46,8 @@ internal class EventParser
             HciEventCodes.CommandStatus => CommandStatusEvent.Parse(ref r),
 
             HciEventCodes.EncryptionChangeV2 => EncryptionChangeV2Event.Parse(ref r),
+
+            HciEventCodes.VendorSpecific => _vseParser.Parse(ref r),
 
             _ => new UnknownHciPacket(HciUnknownReason.UnsupportedEventCode, HciPacketType.Event, eventCode)
         };
