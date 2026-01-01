@@ -160,7 +160,9 @@ public class HciCommandTests
         Assert.Equal(0x01, cmd.Enable);
         Assert.Equal(0x01, cmd.NumSets);
         Assert.Single(cmd.Sets);
-        Assert.Equal(new LeSetExtendedAdvertisingEnableCommand.AdvertisingSet(0x00, 0, 0), cmd.Sets[0]);
+        Assert.Equal(0x00, cmd.Sets[0].AdvertisingHandle);
+        Assert.Equal(0, cmd.Sets[0].Duration);
+        Assert.Equal(0, cmd.Sets[0].MaxExtendedAdvertisingEvents);
     }
 
     [Fact]
@@ -178,7 +180,9 @@ public class HciCommandTests
         Assert.Equal(1, cmd.ScanningPhys & 0x01);
         Assert.Equal(0, (cmd.ScanningPhys >> 2) & 0x01);
         Assert.Single(cmd.ScanParameters);
-        Assert.Equal(new LeSetExtendedScanParametersCommand.ScanParameter(0x01, 4800, 4800), cmd.ScanParameters[0]);
+        Assert.Equal(0x01, cmd.ScanParameters[0].ScanType);
+        Assert.Equal(4800, cmd.ScanParameters[0].ScanInterval);
+        Assert.Equal(4800, cmd.ScanParameters[0].ScanWindow);
     }
 
     [Fact]

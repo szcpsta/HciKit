@@ -35,17 +35,26 @@ public sealed class InquiryCompleteEvent : HciEvent
 // 7.7.2 Inquiry Result event
 public sealed class InquiryResultEvent : HciEvent
 {
-
     public byte NumResponses { get; }
     public IReadOnlyList<InquiryResponse> Responses { get; }
 
-    public readonly struct InquiryResponse(
-        ulong BdAddr,
-        byte PageScanRepetitionMode,
-        ushort Reserved,
-        uint ClassOfDevice,
-        ushort ClockOffset
-    );
+    public readonly struct InquiryResponse
+    {
+        public ulong BdAddr { get; }
+        public byte PageScanRepetitionMode { get; }
+        public ushort Reserved { get; }
+        public uint ClassOfDevice { get; }
+        public ushort ClockOffset { get; }
+
+        public InquiryResponse(ulong bdAddr, byte pageScanRepetitionMode, ushort reserved, uint classOfDevice, ushort clockOffset)
+        {
+            BdAddr = bdAddr;
+            PageScanRepetitionMode = pageScanRepetitionMode;
+            Reserved = reserved;
+            ClassOfDevice = classOfDevice;
+            ClockOffset = clockOffset;
+        }
+    }
 
     public InquiryResultEvent(byte numResponses, InquiryResponse[] responses)
         : base(new(HciEventCodes.InquiryResult))

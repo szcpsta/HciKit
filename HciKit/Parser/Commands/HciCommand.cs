@@ -314,11 +314,19 @@ public sealed class LeSetExtendedAdvertisingEnableCommand : HciCommand
     public byte NumSets { get; }
     public IReadOnlyList<AdvertisingSet> Sets { get; }
 
-    public readonly struct AdvertisingSet(
-        byte AdvertisingHandle,
-        ushort Duration,
-        byte MaxExtendedAdvertisingEvents
-    );
+    public readonly struct AdvertisingSet
+    {
+        public byte AdvertisingHandle { get; }
+        public ushort Duration { get; }
+        public byte MaxExtendedAdvertisingEvents { get; }
+
+        public AdvertisingSet(byte advertisingHandle, ushort duration, byte maxExtendedAdvertisingEvents)
+        {
+            AdvertisingHandle = advertisingHandle;
+            Duration = duration;
+            MaxExtendedAdvertisingEvents = maxExtendedAdvertisingEvents;
+        }
+    }
 
     public LeSetExtendedAdvertisingEnableCommand(byte enable, byte numSets, AdvertisingSet[] sets)
         : base(new(HciOpcodes.LeSetExtendedAdvertisingEnable))
@@ -351,7 +359,19 @@ public sealed class LeSetExtendedScanParametersCommand : HciCommand
     public byte ScanningPhys { get; }
     public IReadOnlyList<ScanParameter> ScanParameters { get; }
 
-    public readonly struct ScanParameter(byte ScanType, ushort ScanInterval, ushort ScanWindow);
+    public readonly struct ScanParameter
+    {
+        public byte ScanType { get; }
+        public ushort ScanInterval { get; }
+        public ushort ScanWindow { get; }
+
+        public ScanParameter(byte scanType, ushort scanInterval, ushort scanWindow)
+        {
+            ScanType = scanType;
+            ScanInterval = scanInterval;
+            ScanWindow = scanWindow;
+        }
+    }
 
     public LeSetExtendedScanParametersCommand(byte ownAddressType, byte scanningFilterPolicy, byte scanningPhys, ScanParameter[] scanParameters)
         : base(new(HciOpcodes.LeSetExtendedScanParameters))
