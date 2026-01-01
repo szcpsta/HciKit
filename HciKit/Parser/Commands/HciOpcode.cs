@@ -15,26 +15,26 @@ public readonly record struct HciOpcode(ushort Value)
 public static class HciOpcodes
 {
     #region 7.1 Link Control commands
-    public static readonly HciOpcode Inquiry = new(0x0401);
-    public static readonly HciOpcode CreateConnection = new(0x0405);
-    public static readonly HciOpcode RemoteNameRequest = new(0x0419);
+    public const ushort Inquiry = 0x0401;
+    public const ushort CreateConnection = 0x0405;
+    public const ushort RemoteNameRequest = 0x0419;
     #endregion 7.1 Link Control commands
 
     #region 7.2 Link Policy commands
-    public static readonly HciOpcode SniffMode = new(0x0803);
-    public static readonly HciOpcode ExitSniffMode = new(0x0804);
-    public static readonly HciOpcode SniffSubrating = new(0x0811);
+    public const ushort SniffMode = 0x0803;
+    public const ushort ExitSniffMode = 0x0804;
+    public const ushort SniffSubrating = 0x0811;
     #endregion 7.2 Link Policy commands
 
     #region 7.3 Controller & Baseband commands
-    public static readonly HciOpcode WriteScanEnable = new(0x0C1A);
+    public const ushort WriteScanEnable = 0x0C1A;
     #endregion 7.3 Controller & Baseband commands
 
     #region 7.8 LE Controller commands
-    public static readonly HciOpcode LeSetExtendedAdvertisingParametersV1 = new(0x2036);
-    public static readonly HciOpcode LeSetExtendedAdvertisingEnable = new(0x2039);
-    public static readonly HciOpcode LeSetExtendedScanParameters = new(0x2041);
-    public static readonly HciOpcode LeSetExtendedScanEnable = new(0x2042);
-    public static readonly HciOpcode LeSetExtendedAdvertisingParametersV2 = new(0x207F);
+    public const ushort LeSetExtendedAdvertisingParametersV1 = 0x2036;
+    public const ushort LeSetExtendedAdvertisingEnable = 0x2039;
+    public const ushort LeSetExtendedScanParameters = 0x2041;
+    public const ushort LeSetExtendedScanEnable = 0x2042;
+    public const ushort LeSetExtendedAdvertisingParametersV2 = 0x207F;
     #endregion 7.8 LE Controller commands
 }
