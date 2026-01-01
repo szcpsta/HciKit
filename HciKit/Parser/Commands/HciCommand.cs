@@ -15,7 +15,6 @@ public abstract class HciCommand : HciPacket
     public override string Name => "Command";
 }
 
-
 #region 7.1 Link Control commands
 // 7.1.1 Inquiry command
 public sealed class InquiryCommand : HciCommand
