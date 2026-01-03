@@ -16,6 +16,9 @@ public static class HciOpcodes
 {
     #region 7.1 Link Control commands
     public const ushort Inquiry = 0x0401;
+    public const ushort InquiryCancel = 0x0402;
+    public const ushort PeriodicInquiryMode = 0x0403;
+    public const ushort ExitPeriodicInquiryMode = 0x0404;
     public const ushort CreateConnection = 0x0405;
     public const ushort RemoteNameRequest = 0x0419;
     #endregion 7.1 Link Control commands
