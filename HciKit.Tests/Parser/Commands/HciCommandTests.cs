@@ -58,6 +58,122 @@ public class HciCommandTests
         Assert.Equal(0x01, cmd.AllowRoleSwitch);
     }
 
+    [Fact(Skip = "TODO: Opcode=0x0406")]
+    public void DisconnectCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0408")]
+    public void CreateConnectionCancelCommandTest()
+    {
+
+    }
+
+    [Fact]
+    public void AcceptConnectionRequestCommandTest()
+    {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0x9, 0x4, 0x7, 0xcf, 0xf0, 0xa, 0xce, 0x9e, 0xf4, 0x0];
+
+        var cmd = parser.Parse(packet) as AcceptConnectionRequestCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x0409, cmd.Opcode.Value);
+        Assert.Equal((ulong)0xf49ece0af0cf, cmd.BdAdder);
+        Assert.Equal(0x00, cmd.Role);
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x040A")]
+    public void RejectConnectionRequestCommandTest()
+    {
+    }
+
+    [Fact]
+    public void LinkKeyRequestReplyCommandTest()
+    {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0xb, 0x4, 0x16, 0x44, 0x50, 0x97, 0xc2, 0xe4, 0x10, 0x70, 0xc9, 0x4, 0x3d, 0x7, 0xc2, 0x99, 0x26, 0x64, 0x34, 0xe, 0xc2, 0xa4, 0x9c, 0xf9, 0xab];
+
+        var cmd = parser.Parse(packet) as LinkKeyRequestReplyCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x040B, cmd.Opcode.Value);
+        Assert.Equal((ulong)0x10e4c2975044, cmd.BdAdder);
+        Assert.Equal([0x70, 0xc9, 0x4, 0x3d, 0x7, 0xc2, 0x99, 0x26, 0x64, 0x34, 0xe, 0xc2, 0xa4, 0x9c, 0xf9, 0xab], cmd.LinkKey);
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x040C")]
+    public void LinkKeyRequestNegativeReplyCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x040D")]
+    public void PinCodeRequestReplyCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x040E")]
+    public void PinCodeRequestNegativeReplyCommandTest()
+    {
+
+    }
+
+    [Fact]
+    public void ChangeConnectionPacketTypeCommandTest()
+    {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0xf, 0x4, 0x4, 0x3, 0x0, 0x18, 0xcc];
+
+        var cmd = parser.Parse(packet) as ChangeConnectionPacketTypeCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x040F, cmd.Opcode.Value);
+        Assert.Equal(0x0003, cmd.ConnectionHandle);
+        Assert.Equal(0xcc18, cmd.PacketType);
+    }
+
+    [Fact]
+    public void AuthenticationRequestedCommandTest()
+    {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0x11, 0x4, 0x2, 0x3, 0x0];
+
+        var cmd = parser.Parse(packet) as AuthenticationRequestedCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x0411, cmd.Opcode.Value);
+        Assert.Equal(0x0003, cmd.ConnectionHandle);
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0413")]
+    public void SetConnectionEncryptionCommandTest()
+    {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0x13, 0x4, 0x3, 0x3, 0x0, 0x1];
+
+        var cmd = parser.Parse(packet) as SetConnectionEncryptionCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x0413, cmd.Opcode.Value);
+        Assert.Equal(0x0003, cmd.ConnectionHandle);
+        Assert.Equal(0x01, cmd.EncryptionEnable);
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0415")]
+    public void ChangeConnectionLinkKeyCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0417")]
+    public void LinkKeySelectionCommandTest()
+    {
+
+    }
+
     [Fact]
     public void RemoteNameRequestCommandTest()
     {
