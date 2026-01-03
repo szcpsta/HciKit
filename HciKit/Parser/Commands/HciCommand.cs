@@ -377,6 +377,339 @@ public sealed class RemoteNameRequestCommand : HciCommand
     }
 }
 
+// 7.1.20 Remote Name Request Cancel command
+public sealed class RemoteNameRequestCancelCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+
+    public RemoteNameRequestCancelCommand(ulong bdAdder)
+        : base(new(HciOpcodes.RemoteNameRequestCancel))
+    {
+        BdAdder = bdAdder;
+    }
+
+    public static RemoteNameRequestCancelCommand Parse(ref HciSpanReader r)
+    {
+        return new RemoteNameRequestCancelCommand(r.ReadU48());
+    }
+}
+
+// 7.1.21 Read Remote Supported Features command
+public sealed class ReadRemoteSupportedFeaturesCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+
+    public ReadRemoteSupportedFeaturesCommand(ushort connectionHandle)
+        : base(new(HciOpcodes.ReadRemoteSupportedFeatures))
+    {
+        ConnectionHandle = connectionHandle;
+    }
+
+    public static ReadRemoteSupportedFeaturesCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadRemoteSupportedFeaturesCommand(r.ReadU16());
+    }
+}
+
+// 7.1.22 Read Remote Extended Features command
+public sealed class ReadRemoteExtendedFeaturesCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+    public byte PageNumber { get; }
+
+    public ReadRemoteExtendedFeaturesCommand(ushort connectionHandle, byte pageNumber)
+        : base(new(HciOpcodes.ReadRemoteExtendedFeatures))
+    {
+        ConnectionHandle = connectionHandle;
+        PageNumber = pageNumber;
+    }
+
+    public static ReadRemoteExtendedFeaturesCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadRemoteExtendedFeaturesCommand(r.ReadU16(), r.ReadU8());
+    }
+}
+
+// 7.1.23 Read Remote Version Information command
+public sealed class ReadRemoteVersionInformationCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+
+    public ReadRemoteVersionInformationCommand(ushort connectionHandle)
+        : base(new(HciOpcodes.ReadRemoteVersionInformation))
+    {
+        ConnectionHandle = connectionHandle;
+    }
+
+    public static ReadRemoteVersionInformationCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadRemoteVersionInformationCommand(r.ReadU16());
+    }
+}
+
+// 7.1.24 Read Clock Offset command
+public sealed class ReadClockOffsetCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+
+    public ReadClockOffsetCommand(ushort connectionHandle)
+        : base(new(HciOpcodes.ReadClockOffset))
+    {
+        ConnectionHandle = connectionHandle;
+    }
+
+    public static ReadClockOffsetCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadClockOffsetCommand(r.ReadU16());
+    }
+}
+
+// 7.1.25 Read LMP Handle command
+public sealed class ReadLmpHandleCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+
+    public ReadLmpHandleCommand(ushort connectionHandle)
+        : base(new(HciOpcodes.ReadLmpHandle))
+    {
+        ConnectionHandle = connectionHandle;
+    }
+
+    public static ReadLmpHandleCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadLmpHandleCommand(r.ReadU16());
+    }
+}
+
+// 7.1.26 Setup Synchronous Connection command
+public sealed class SetupSynchronousConnectionCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+    public uint TransmitBandwidth { get; }
+    public uint ReceiveBandwidth { get; }
+    public ushort MaxLatency { get; }
+    public ushort VoiceSetting { get; }
+    public byte RetransmissionEffort { get; }
+    public ushort PacketType { get; }
+
+    public SetupSynchronousConnectionCommand(ushort connectionHandle, uint transmitBandwidth, uint receiveBandwidth,
+                                            ushort maxLatency, ushort voiceSetting, byte retransmissionEffort, ushort packetType)
+        : base(new(HciOpcodes.SetupSynchronousConnection))
+    {
+        ConnectionHandle = connectionHandle;
+        TransmitBandwidth = transmitBandwidth;
+        ReceiveBandwidth = receiveBandwidth;
+        MaxLatency = maxLatency;
+        VoiceSetting = voiceSetting;
+        RetransmissionEffort = retransmissionEffort;
+        PacketType = packetType;
+    }
+
+    public static SetupSynchronousConnectionCommand Parse(ref HciSpanReader r)
+    {
+        return new SetupSynchronousConnectionCommand(r.ReadU16(), r.ReadU32(), r.ReadU32(), r.ReadU16(), r.ReadU16(), r.ReadU8(), r.ReadU16());
+    }
+}
+
+// 7.1.27 Accept Synchronous Connection Request command
+public sealed class AcceptSynchronousConnectionRequestCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+    public uint TransmitBandwidth { get; }
+    public uint ReceiveBandwidth { get; }
+    public ushort MaxLatency { get; }
+    public ushort VoiceSetting { get; }
+    public byte RetransmissionEffort { get; }
+    public ushort PacketType { get; }
+
+    public AcceptSynchronousConnectionRequestCommand(ulong bdAdder, uint transmitBandwidth, uint receiveBandwidth,
+                                                    ushort maxLatency, ushort voiceSetting, byte retransmissionEffort, ushort packetType)
+        : base(new(HciOpcodes.AcceptSynchronousConnectionRequest))
+    {
+        BdAdder = bdAdder;
+        TransmitBandwidth = transmitBandwidth;
+        ReceiveBandwidth = receiveBandwidth;
+        MaxLatency = maxLatency;
+        VoiceSetting = voiceSetting;
+        RetransmissionEffort = retransmissionEffort;
+        PacketType = packetType;
+    }
+
+    public static AcceptSynchronousConnectionRequestCommand Parse(ref HciSpanReader r)
+    {
+        return new AcceptSynchronousConnectionRequestCommand(r.ReadU48(), r.ReadU32(), r.ReadU32(), r.ReadU16(), r.ReadU16(), r.ReadU8(), r.ReadU16());
+    }
+}
+
+// 7.1.28 Reject Synchronous Connection Request command
+public sealed class RejectSynchronousConnectionRequestCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+    public byte Reason { get; }
+
+    public RejectSynchronousConnectionRequestCommand(ulong bdAdder, byte reason)
+        : base(new(HciOpcodes.RejectSynchronousConnectionRequest))
+    {
+        BdAdder = bdAdder;
+        Reason = reason;
+    }
+
+    public static RejectSynchronousConnectionRequestCommand Parse(ref HciSpanReader r)
+    {
+        return new RejectSynchronousConnectionRequestCommand(r.ReadU48(), r.ReadU8());
+    }
+}
+
+// 7.1.29 IO Capability Request Reply command
+public sealed class IoCapabilityRequestReplyCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+    public byte IoCapability { get; }
+    public byte OobDataPresent { get; }
+    public byte AuthenticationRequirements { get; }
+
+    public IoCapabilityRequestReplyCommand(ulong bdAdder, byte ioCapability, byte oobDataPresent, byte authenticationRequirements)
+        : base(new(HciOpcodes.IoCapabilityRequestReply))
+    {
+        BdAdder = bdAdder;
+        IoCapability = ioCapability;
+        OobDataPresent = oobDataPresent;
+        AuthenticationRequirements = authenticationRequirements;
+    }
+
+    public static IoCapabilityRequestReplyCommand Parse(ref HciSpanReader r)
+    {
+        return new IoCapabilityRequestReplyCommand(r.ReadU48(), r.ReadU8(), r.ReadU8(), r.ReadU8());
+    }
+}
+
+// 7.1.30 User Confirmation Request Reply command
+public sealed class UserConfirmationRequestReplyCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+
+    public UserConfirmationRequestReplyCommand(ulong bdAdder)
+        : base(new(HciOpcodes.UserConfirmationRequestReply))
+    {
+        BdAdder = bdAdder;
+    }
+
+    public static UserConfirmationRequestReplyCommand Parse(ref HciSpanReader r)
+    {
+        return new UserConfirmationRequestReplyCommand(r.ReadU48());
+    }
+}
+
+// 7.1.31 User Confirmation Request Negative Reply command
+public sealed class UserConfirmationRequestNegativeReplyCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+
+    public UserConfirmationRequestNegativeReplyCommand(ulong bdAdder)
+        : base(new(HciOpcodes.UserConfirmationRequestNegativeReply))
+    {
+        BdAdder = bdAdder;
+    }
+
+    public static UserConfirmationRequestNegativeReplyCommand Parse(ref HciSpanReader r)
+    {
+        return new UserConfirmationRequestNegativeReplyCommand(r.ReadU48());
+    }
+}
+
+// 7.1.32 User Passkey Request Reply command
+public sealed class UserPasskeyRequestReplyCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+    public uint NumericValue { get; }
+
+    public UserPasskeyRequestReplyCommand(ulong bdAdder, uint numericValue)
+        : base(new(HciOpcodes.UserPasskeyRequestReply))
+    {
+        BdAdder = bdAdder;
+        NumericValue = numericValue;
+    }
+
+    public static UserPasskeyRequestReplyCommand Parse(ref HciSpanReader r)
+    {
+        return new UserPasskeyRequestReplyCommand(r.ReadU48(), r.ReadU32());
+    }
+}
+
+// 7.1.33 User Passkey Request Negative Reply command
+public sealed class UserPasskeyRequestNegativeReplyCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+
+    public UserPasskeyRequestNegativeReplyCommand(ulong bdAdder)
+        : base(new(HciOpcodes.UserPasskeyRequestNegativeReply))
+    {
+        BdAdder = bdAdder;
+    }
+
+    public static UserPasskeyRequestNegativeReplyCommand Parse(ref HciSpanReader r)
+    {
+        return new UserPasskeyRequestNegativeReplyCommand(r.ReadU48());
+    }
+}
+
+// 7.1.34 Remote OOB Data Request Reply command
+public sealed class RemoteOobDataRequestReplyCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+    public byte[] SimplePairingHashC { get; }
+    public byte[] SimplePairingRandomizerR { get; }
+
+    public RemoteOobDataRequestReplyCommand(ulong bdAdder, byte[] simplePairingHashC, byte[] simplePairingRandomizerR)
+        : base(new(HciOpcodes.RemoteOobDataRequestReply))
+    {
+        BdAdder = bdAdder;
+        SimplePairingHashC = simplePairingHashC;
+        SimplePairingRandomizerR = simplePairingRandomizerR;
+    }
+
+    public static RemoteOobDataRequestReplyCommand Parse(ref HciSpanReader r)
+    {
+        return new RemoteOobDataRequestReplyCommand(r.ReadU48(), r.ReadBytes(16).ToArray(), r.ReadBytes(16).ToArray());
+    }
+}
+
+// 7.1.35 Remote OOB Data Request Negative Reply command
+public sealed class RemoteOobDataRequestNegativeReplyCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+
+    public RemoteOobDataRequestNegativeReplyCommand(ulong bdAdder)
+        : base(new(HciOpcodes.RemoteOobDataRequestNegativeReply))
+    {
+        BdAdder = bdAdder;
+    }
+
+    public static RemoteOobDataRequestNegativeReplyCommand Parse(ref HciSpanReader r)
+    {
+        return new RemoteOobDataRequestNegativeReplyCommand(r.ReadU48());
+    }
+}
+
+// 7.1.36 IO Capability Request Negative Reply command
+public sealed class IoCapabilityRequestNegativeReplyCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+    public byte Reason { get; }
+
+    public IoCapabilityRequestNegativeReplyCommand(ulong bdAdder, byte reason)
+        : base(new(HciOpcodes.IoCapabilityRequestNegativeReply))
+    {
+        BdAdder = bdAdder;
+        Reason = reason;
+    }
+
+    public static IoCapabilityRequestNegativeReplyCommand Parse(ref HciSpanReader r)
+    {
+        return new IoCapabilityRequestNegativeReplyCommand(r.ReadU48(), r.ReadU8());
+    }
+}
+
 #endregion 7.1 Link Control commands
 
 #region 7.2 Link Policy commands

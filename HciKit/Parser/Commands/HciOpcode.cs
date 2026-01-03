@@ -34,6 +34,23 @@ public static class HciOpcodes
     public const ushort ChangeConnectionLinkKey = 0x0415;
     public const ushort LinkKeySelection = 0x0417;
     public const ushort RemoteNameRequest = 0x0419;
+    public const ushort RemoteNameRequestCancel = 0x041A;
+    public const ushort ReadRemoteSupportedFeatures = 0x041B;
+    public const ushort ReadRemoteExtendedFeatures = 0x041C;
+    public const ushort ReadRemoteVersionInformation = 0x041D;
+    public const ushort ReadClockOffset = 0x041F;
+    public const ushort ReadLmpHandle = 0x0420;
+    public const ushort SetupSynchronousConnection = 0x0428;
+    public const ushort AcceptSynchronousConnectionRequest = 0x0429;
+    public const ushort RejectSynchronousConnectionRequest = 0x042A;
+    public const ushort IoCapabilityRequestReply = 0x042B;
+    public const ushort UserConfirmationRequestReply = 0x042C;
+    public const ushort UserConfirmationRequestNegativeReply = 0x042D;
+    public const ushort UserPasskeyRequestReply = 0x042E;
+    public const ushort UserPasskeyRequestNegativeReply = 0x042F;
+    public const ushort RemoteOobDataRequestReply = 0x0430;
+    public const ushort RemoteOobDataRequestNegativeReply = 0x0433;
+    public const ushort IoCapabilityRequestNegativeReply = 0x0434;
     #endregion 7.1 Link Control commands
 
     #region 7.2 Link Policy commands
