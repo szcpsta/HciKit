@@ -54,25 +54,25 @@ public sealed class InquiryCancelCommand : HciCommand
 // 7.1.3 Periodic Inquiry Mode command
 public sealed class PeriodicInquiryModeCommand : HciCommand
 {
-    public uint Lap { get; }
     public ushort MaxPeriodLength { get; }
     public ushort MinPeriodLength { get; }
+    public uint Lap { get; }
     public byte InquiryLength { get; }
     public byte NumResponses { get; }
 
-    public PeriodicInquiryModeCommand(uint lap, ushort maxPeriodLength, ushort minPeriodLength, byte inquiryLength, byte numResponses)
+    public PeriodicInquiryModeCommand(ushort maxPeriodLength, ushort minPeriodLength, uint lap, byte inquiryLength, byte numResponses)
         : base(new(HciOpcodes.PeriodicInquiryMode))
     {
-        Lap = lap;
         MaxPeriodLength = maxPeriodLength;
         MinPeriodLength = minPeriodLength;
+        Lap = lap;
         InquiryLength = inquiryLength;
         NumResponses = numResponses;
     }
 
     public static PeriodicInquiryModeCommand Parse(ref HciSpanReader r)
     {
-        return new PeriodicInquiryModeCommand(r.ReadU24(), r.ReadU16(), r.ReadU16(), r.ReadU8(), r.ReadU8());
+        return new PeriodicInquiryModeCommand(r.ReadU16(), r.ReadU16(), r.ReadU24(), r.ReadU8(), r.ReadU8());
     }
 }
 
