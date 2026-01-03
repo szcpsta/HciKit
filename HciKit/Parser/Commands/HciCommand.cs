@@ -117,6 +117,243 @@ public sealed class CreateConnectionCommand : HciCommand
     }
 }
 
+// 7.1.6 Disconnect command
+public sealed class DisconnectCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+    public byte Reason { get; }
+
+    public DisconnectCommand(ushort connectionHandle, byte reason)
+        : base(new(HciOpcodes.Disconnect))
+    {
+        ConnectionHandle = connectionHandle;
+        Reason = reason;
+    }
+
+    public static DisconnectCommand Parse(ref HciSpanReader r)
+    {
+        return new DisconnectCommand(r.ReadU16(), r.ReadU8());
+    }
+}
+
+// 7.1.7 Create Connection Cancel command
+public sealed class CreateConnectionCancelCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+
+    public CreateConnectionCancelCommand(ulong bdAdder)
+        : base(new(HciOpcodes.CreateConnectionCancel))
+    {
+        BdAdder = bdAdder;
+    }
+
+    public static CreateConnectionCancelCommand Parse(ref HciSpanReader r)
+    {
+        return new CreateConnectionCancelCommand(r.ReadU48());
+    }
+}
+
+// 7.1.8 Accept Connection Request command
+public sealed class AcceptConnectionRequestCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+    public byte Role { get; }
+
+    public AcceptConnectionRequestCommand(ulong bdAdder, byte role)
+        : base(new(HciOpcodes.AcceptConnectionRequest))
+    {
+        BdAdder = bdAdder;
+        Role = role;
+    }
+
+    public static AcceptConnectionRequestCommand Parse(ref HciSpanReader r)
+    {
+        return new AcceptConnectionRequestCommand(r.ReadU48(), r.ReadU8());
+    }
+}
+
+// 7.1.9 Reject Connection Request command
+public sealed class RejectConnectionRequestCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+    public byte Reason { get; }
+
+    public RejectConnectionRequestCommand(ulong bdAdder, byte reason)
+        : base(new(HciOpcodes.RejectConnectionRequest))
+    {
+        BdAdder = bdAdder;
+        Reason = reason;
+    }
+
+    public static RejectConnectionRequestCommand Parse(ref HciSpanReader r)
+    {
+        return new RejectConnectionRequestCommand(r.ReadU48(), r.ReadU8());
+    }
+}
+
+// 7.1.10 Link Key Request Reply command
+public sealed class LinkKeyRequestReplyCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+    public byte[] LinkKey { get; }
+
+    public LinkKeyRequestReplyCommand(ulong bdAdder, byte[] linkKey)
+        : base(new(HciOpcodes.LinkKeyRequestReply))
+    {
+        BdAdder = bdAdder;
+        LinkKey = linkKey;
+    }
+
+    public static LinkKeyRequestReplyCommand Parse(ref HciSpanReader r)
+    {
+        return new LinkKeyRequestReplyCommand(r.ReadU48(), r.ReadBytes(16).ToArray());
+    }
+}
+
+// 7.1.11 Link Key Request Negative Reply command
+public sealed class LinkKeyRequestNegativeReplyCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+
+    public LinkKeyRequestNegativeReplyCommand(ulong bdAdder)
+        : base(new(HciOpcodes.LinkKeyRequestNegativeReply))
+    {
+        BdAdder = bdAdder;
+    }
+
+    public static LinkKeyRequestNegativeReplyCommand Parse(ref HciSpanReader r)
+    {
+        return new LinkKeyRequestNegativeReplyCommand(r.ReadU48());
+    }
+}
+
+// 7.1.12 PIN Code Request Reply command
+public sealed class PinCodeRequestReplyCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+    public byte PinCodeLength { get; }
+    public byte[] PinCode { get; }
+
+    public PinCodeRequestReplyCommand(ulong bdAdder, byte pinCodeLength, byte[] pinCode)
+        : base(new(HciOpcodes.PinCodeRequestReply))
+    {
+        BdAdder = bdAdder;
+        PinCodeLength = pinCodeLength;
+        PinCode = pinCode;
+    }
+
+    public static PinCodeRequestReplyCommand Parse(ref HciSpanReader r)
+    {
+        return new PinCodeRequestReplyCommand(r.ReadU48(), r.ReadU8(), r.ReadBytes(16).ToArray());
+    }
+}
+
+// 7.1.13 PIN Code Request Negative Reply command
+public sealed class PinCodeRequestNegativeReplyCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+
+    public PinCodeRequestNegativeReplyCommand(ulong bdAdder)
+        : base(new(HciOpcodes.PinCodeRequestNegativeReply))
+    {
+        BdAdder = bdAdder;
+    }
+
+    public static PinCodeRequestNegativeReplyCommand Parse(ref HciSpanReader r)
+    {
+        return new PinCodeRequestNegativeReplyCommand(r.ReadU48());
+    }
+}
+
+// 7.1.14 Change Connection Packet Type command
+public sealed class ChangeConnectionPacketTypeCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+    public ushort PacketType { get; }
+
+    public ChangeConnectionPacketTypeCommand(ushort connectionHandle, ushort packetType)
+        : base(new(HciOpcodes.ChangeConnectionPacketType))
+    {
+        ConnectionHandle = connectionHandle;
+        PacketType = packetType;
+    }
+
+    public static ChangeConnectionPacketTypeCommand Parse(ref HciSpanReader r)
+    {
+        return new ChangeConnectionPacketTypeCommand(r.ReadU16(), r.ReadU16());
+    }
+}
+
+// 7.1.15 Authentication Requested command
+public sealed class AuthenticationRequestedCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+
+    public AuthenticationRequestedCommand(ushort connectionHandle)
+        : base(new(HciOpcodes.AuthenticationRequested))
+    {
+        ConnectionHandle = connectionHandle;
+    }
+
+    public static AuthenticationRequestedCommand Parse(ref HciSpanReader r)
+    {
+        return new AuthenticationRequestedCommand(r.ReadU16());
+    }
+}
+
+// 7.1.16 Set Connection Encryption command
+public sealed class SetConnectionEncryptionCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+    public byte EncryptionEnable { get; }
+
+    public SetConnectionEncryptionCommand(ushort connectionHandle, byte encryptionEnable)
+        : base(new(HciOpcodes.SetConnectionEncryption))
+    {
+        ConnectionHandle = connectionHandle;
+        EncryptionEnable = encryptionEnable;
+    }
+
+    public static SetConnectionEncryptionCommand Parse(ref HciSpanReader r)
+    {
+        return new SetConnectionEncryptionCommand(r.ReadU16(), r.ReadU8());
+    }
+}
+
+// 7.1.17 Change Connection Link Key command
+public sealed class ChangeConnectionLinkKeyCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+
+    public ChangeConnectionLinkKeyCommand(ushort connectionHandle)
+        : base(new(HciOpcodes.ChangeConnectionLinkKey))
+    {
+        ConnectionHandle = connectionHandle;
+    }
+
+    public static ChangeConnectionLinkKeyCommand Parse(ref HciSpanReader r)
+    {
+        return new ChangeConnectionLinkKeyCommand(r.ReadU16());
+    }
+}
+
+// 7.1.18 Link Key Selection command
+public sealed class LinkKeySelectionCommand : HciCommand
+{
+    public byte KeyFlag { get; }
+
+    public LinkKeySelectionCommand(byte keyFlag)
+        : base(new(HciOpcodes.LinkKeySelection))
+    {
+        KeyFlag = keyFlag;
+    }
+
+    public static LinkKeySelectionCommand Parse(ref HciSpanReader r)
+    {
+        return new LinkKeySelectionCommand(r.ReadU8());
+    }
+}
+
 // 7.1.19 Remote Name Request command
 public sealed class RemoteNameRequestCommand : HciCommand
 {

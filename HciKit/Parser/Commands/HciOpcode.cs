@@ -20,6 +20,19 @@ public static class HciOpcodes
     public const ushort PeriodicInquiryMode = 0x0403;
     public const ushort ExitPeriodicInquiryMode = 0x0404;
     public const ushort CreateConnection = 0x0405;
+    public const ushort Disconnect = 0x0406;
+    public const ushort CreateConnectionCancel = 0x0408;
+    public const ushort AcceptConnectionRequest = 0x0409;
+    public const ushort RejectConnectionRequest = 0x040A;
+    public const ushort LinkKeyRequestReply = 0x040B;
+    public const ushort LinkKeyRequestNegativeReply = 0x040C;
+    public const ushort PinCodeRequestReply = 0x040D;
+    public const ushort PinCodeRequestNegativeReply = 0x040E;
+    public const ushort ChangeConnectionPacketType = 0x040F;
+    public const ushort AuthenticationRequested = 0x0411;
+    public const ushort SetConnectionEncryption = 0x0413;
+    public const ushort ChangeConnectionLinkKey = 0x0415;
+    public const ushort LinkKeySelection = 0x0417;
     public const ushort RemoteNameRequest = 0x0419;
     #endregion 7.1 Link Control commands
 
