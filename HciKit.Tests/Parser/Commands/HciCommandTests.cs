@@ -196,28 +196,57 @@ public class HciCommandTests
 
     }
 
-    [Fact(Skip = "TODO: Opcode=0x041B")]
+    [Fact]
     public void ReadRemoteSupportedFeaturesCommandTest()
     {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0x1b, 0x4, 0x2, 0x3, 0x0];
 
+        var cmd = parser.Parse(packet) as ReadRemoteSupportedFeaturesCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x041B, cmd.Opcode.Value);
+        Assert.Equal(0x0003, cmd.ConnectionHandle);
     }
 
-    [Fact(Skip = "TODO: Opcode=0x041C")]
+    [Fact]
     public void ReadRemoteExtendedFeaturesCommandTest()
     {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0x1c, 0x4, 0x3, 0x3, 0x0, 0x2];
 
+        var cmd = parser.Parse(packet) as ReadRemoteExtendedFeaturesCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x041C, cmd.Opcode.Value);
+        Assert.Equal(0x0003, cmd.ConnectionHandle);
+        Assert.Equal(2, cmd.PageNumber);
     }
 
-    [Fact(Skip = "TODO: Opcode=0x041D")]
+    [Fact]
     public void ReadRemoteVersionInformationCommandTest()
     {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0x1d, 0x4, 0x2, 0x4, 0x0];
 
+        var cmd = parser.Parse(packet) as ReadRemoteVersionInformationCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x041D, cmd.Opcode.Value);
+        Assert.Equal(0x0004, cmd.ConnectionHandle);
     }
 
-    [Fact(Skip = "TODO: Opcode=0x041F")]
+    [Fact]
     public void ReadClockOffsetCommandTest()
     {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0x1f, 0x4, 0x2, 0x4, 0x0];
 
+        var cmd = parser.Parse(packet) as ReadClockOffsetCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x041F, cmd.Opcode.Value);
+        Assert.Equal(0x0004, cmd.ConnectionHandle);
     }
 
     [Fact(Skip = "TODO: Opcode=0x0420")]
