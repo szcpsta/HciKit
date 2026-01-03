@@ -31,13 +31,13 @@ public class HciCommandTests
     [Fact(Skip = "TODO: Opcode=0x0403")]
     public void PeriodicInquiryModeCommandTest()
     {
-        
+
     }
 
     [Fact(Skip = "TODO: Opcode=0x0404")]
     public void ExitPeriodicInquiryModeCommandTest()
     {
-        
+
     }
 
     [Fact]
