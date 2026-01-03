@@ -23,6 +23,23 @@ public class HciCommandTests
         Assert.Equal(0x00, cmd.NumResponses);
     }
 
+    [Fact(Skip = "TODO: Opcode=0x0402")]
+    public void InquiryCancelCommandTest()
+    {
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0403")]
+    public void PeriodicInquiryModeCommandTest()
+    {
+        
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0404")]
+    public void ExitPeriodicInquiryModeCommandTest()
+    {
+        
+    }
+
     [Fact]
     public void CreateConnectionCommandTest()
     {

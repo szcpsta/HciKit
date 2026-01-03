@@ -29,6 +29,9 @@ internal class CommandParser
         {
             // 7.1 Link Control commands (OGF: 0x01)
             HciOpcodes.Inquiry => InquiryCommand.Parse(ref r),
+            HciOpcodes.InquiryCancel => InquiryCancelCommand.Parse(ref r),
+            HciOpcodes.PeriodicInquiryMode => PeriodicInquiryModeCommand.Parse(ref r),
+            HciOpcodes.ExitPeriodicInquiryMode => ExitPeriodicInquiryModeCommand.Parse(ref r),
             HciOpcodes.CreateConnection => CreateConnectionCommand.Parse(ref r),
             HciOpcodes.RemoteNameRequest => RemoteNameRequestCommand.Parse(ref r),
             // 7.2 Link Policy commands (OGF: 0x02)
