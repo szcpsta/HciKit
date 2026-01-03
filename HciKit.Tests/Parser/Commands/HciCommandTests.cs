@@ -190,6 +190,108 @@ public class HciCommandTests
         Assert.Equal(0x0000, cmd.ClockOffset);
     }
 
+    [Fact(Skip = "TODO: Opcode=0x041A")]
+    public void RemoteNameRequestCancelCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x041B")]
+    public void ReadRemoteSupportedFeaturesCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x041C")]
+    public void ReadRemoteExtendedFeaturesCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x041D")]
+    public void ReadRemoteVersionInformationCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x041F")]
+    public void ReadClockOffsetCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0420")]
+    public void ReadLmpHandleCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0428")]
+    public void SetupSynchronousConnectionCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0429")]
+    public void AcceptSynchronousConnectionRequestCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x042A")]
+    public void RejectSynchronousConnectionRequestCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x042B")]
+    public void IoCapabilityRequestReplyCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x042C")]
+    public void UserConfirmationRequestReplyCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x042D")]
+    public void UserConfirmationRequestNegativeReplyCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x042E")]
+    public void UserPasskeyRequestReplyCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x042F")]
+    public void UserPasskeyRequestNegativeReplyCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0430")]
+    public void RemoteOobDataRequestReplyCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0433")]
+    public void RemoteOobDataRequestNegativeReplyCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0434")]
+    public void IoCapabilityRequestNegativeReplyCommandTest()
+    {
+
+    }
+
     [Fact]
     public void SniffModeCommandTest()
     {
