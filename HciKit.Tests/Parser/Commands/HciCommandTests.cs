@@ -8,6 +8,7 @@ namespace HciKit.Tests.Parser.Commands;
 
 public class HciCommandTests
 {
+    #region 7.1 Link Control commands (OGF: 0x01)
     [Fact]
     public void InquiryCommandTest()
     {
@@ -374,7 +375,9 @@ public class HciCommandTests
     {
 
     }
+    #endregion 7.1 Link Control commands (OGF: 0x01)
 
+    #region 7.2 Link Policy commands (OGF: 0x02)
     [Fact]
     public void SniffModeCommandTest()
     {
@@ -420,7 +423,9 @@ public class HciCommandTests
         Assert.Equal(2, cmd.MinRemoteTimeout);
         Assert.Equal(2, cmd.MinLocalTimeout);
     }
+    #endregion 7.2 Link Policy commands (OGF: 0x02)
 
+    #region 7.3 Controller & Baseband commands (OGF: 0x03)
     [Fact]
     public void WriteScanEnableCommandTest()
     {
@@ -433,7 +438,9 @@ public class HciCommandTests
         Assert.Equal(0x0c1a, cmd.Opcode.Value);
         Assert.Equal(0x02, cmd.ScanEnable);
     }
+    #endregion 7.3 Controller & Baseband commands (OGF: 0x03)
 
+    #region 7.8 LE Controller commands (OCF: 0x08)
     [Fact]
     public void LeSetExtendedAdvertisingParametersV1CommandTest()
     {
@@ -458,11 +465,6 @@ public class HciCommandTests
         Assert.Equal(0x01, cmd.SecondaryAdvertisingPhy);
         Assert.Equal(0x00, cmd.AdvertisingSid);
         Assert.Equal(0x00, cmd.ScanRequestNotificationEnable);
-    }
-
-    [Fact(Skip = "TODO: Opcode=0x207F")]
-    public void LeSetExtendedAdvertisingParametersV2CommandTest()
-    {
     }
 
     [Fact]
@@ -518,4 +520,10 @@ public class HciCommandTests
         Assert.Equal(0, cmd.Duration);
         Assert.Equal(0, cmd.Period);
     }
+
+    [Fact(Skip = "TODO: Opcode=0x207F")]
+    public void LeSetExtendedAdvertisingParametersV2CommandTest()
+    {
+    }
+    #endregion 7.8 LE Controller commands (OCF: 0x08)
 }
