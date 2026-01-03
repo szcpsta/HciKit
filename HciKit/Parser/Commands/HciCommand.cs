@@ -710,6 +710,354 @@ public sealed class IoCapabilityRequestNegativeReplyCommand : HciCommand
     }
 }
 
+// 7.1.45 Enhanced Setup Synchronous Connection command
+public sealed class EnhancedSetupSynchronousConnectionCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+    public uint TransmitBandwidth { get; }
+    public uint ReceiveBandwidth { get; }
+    public byte[] TransmitCodingFormat { get; }
+    public byte[] ReceiveCodingFormat { get; }
+    public ushort TransmitCodecFrameSize { get; }
+    public ushort ReceiveCodecFrameSize { get; }
+    public uint InputBandwidth { get; }
+    public uint OutputBandwidth { get; }
+    public byte[] InputCodingFormat { get; }
+    public byte[] OutputCodingFormat { get; }
+    public ushort InputCodedDataSize { get; }
+    public ushort OutputCodedDataSize { get; }
+    public byte InputPcmDataFormat { get; }
+    public byte OutputPcmDataFormat { get; }
+    public byte InputPcmSamplePayloadMsbPosition { get; }
+    public byte OutputPcmSamplePayloadMsbPosition { get; }
+    public byte InputDataPath { get; }
+    public byte OutputDataPath { get; }
+    public byte InputTransportUnitSize { get; }
+    public byte OutputTransportUnitSize { get; }
+    public ushort MaxLatency { get; }
+    public ushort PacketType { get; }
+    public byte RetransmissionEffort { get; }
+
+    public EnhancedSetupSynchronousConnectionCommand(ushort connectionHandle, uint transmitBandwidth, uint receiveBandwidth,
+                                                    byte[] transmitCodingFormat, byte[] receiveCodingFormat,
+                                                    ushort transmitCodecFrameSize, ushort receiveCodecFrameSize,
+                                                    uint inputBandwidth, uint outputBandwidth,
+                                                    byte[] inputCodingFormat, byte[] outputCodingFormat,
+                                                    ushort inputCodedDataSize, ushort outputCodedDataSize,
+                                                    byte inputPcmDataFormat, byte outputPcmDataFormat,
+                                                    byte inputPcmSamplePayloadMsbPosition, byte outputPcmSamplePayloadMsbPosition,
+                                                    byte inputDataPath, byte outputDataPath,
+                                                    byte inputTransportUnitSize, byte outputTransportUnitSize,
+                                                    ushort maxLatency, ushort packetType, byte retransmissionEffort)
+        : base(new(HciOpcodes.EnhancedSetupSynchronousConnection))
+    {
+        ConnectionHandle = connectionHandle;
+        TransmitBandwidth = transmitBandwidth;
+        ReceiveBandwidth = receiveBandwidth;
+        TransmitCodingFormat = transmitCodingFormat;
+        ReceiveCodingFormat = receiveCodingFormat;
+        TransmitCodecFrameSize = transmitCodecFrameSize;
+        ReceiveCodecFrameSize = receiveCodecFrameSize;
+        InputBandwidth = inputBandwidth;
+        OutputBandwidth = outputBandwidth;
+        InputCodingFormat = inputCodingFormat;
+        OutputCodingFormat = outputCodingFormat;
+        InputCodedDataSize = inputCodedDataSize;
+        OutputCodedDataSize = outputCodedDataSize;
+        InputPcmDataFormat = inputPcmDataFormat;
+        OutputPcmDataFormat = outputPcmDataFormat;
+        InputPcmSamplePayloadMsbPosition = inputPcmSamplePayloadMsbPosition;
+        OutputPcmSamplePayloadMsbPosition = outputPcmSamplePayloadMsbPosition;
+        InputDataPath = inputDataPath;
+        OutputDataPath = outputDataPath;
+        InputTransportUnitSize = inputTransportUnitSize;
+        OutputTransportUnitSize = outputTransportUnitSize;
+        MaxLatency = maxLatency;
+        PacketType = packetType;
+        RetransmissionEffort = retransmissionEffort;
+    }
+
+    public static EnhancedSetupSynchronousConnectionCommand Parse(ref HciSpanReader r)
+    {
+        return new EnhancedSetupSynchronousConnectionCommand(r.ReadU16(), r.ReadU32(), r.ReadU32(),
+                                                r.ReadBytes(5).ToArray(), r.ReadBytes(5).ToArray(),
+                                                r.ReadU16(), r.ReadU16(),
+                                                r.ReadU32(), r.ReadU32(),
+                                                r.ReadBytes(5).ToArray(), r.ReadBytes(5).ToArray(),
+                                                r.ReadU16(), r.ReadU16(),
+                                                r.ReadU8(), r.ReadU8(),
+                                                r.ReadU8(), r.ReadU8(),
+                                                r.ReadU8(), r.ReadU8(),
+                                                r.ReadU8(), r.ReadU8(),
+                                                r.ReadU16(), r.ReadU16(), r.ReadU8());
+    }
+}
+
+// 7.1.46 Enhanced Accept Synchronous Connection Request command
+public sealed class EnhancedAcceptSynchronousConnectionRequestCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+    public uint TransmitBandwidth { get; }
+    public uint ReceiveBandwidth { get; }
+    public byte[] TransmitCodingFormat { get; }
+    public byte[] ReceiveCodingFormat { get; }
+    public ushort TransmitCodecFrameSize { get; }
+    public ushort ReceiveCodecFrameSize { get; }
+    public uint InputBandwidth { get; }
+    public uint OutputBandwidth { get; }
+    public byte[] InputCodingFormat { get; }
+    public byte[] OutputCodingFormat { get; }
+    public ushort InputCodedDataSize { get; }
+    public ushort OutputCodedDataSize { get; }
+    public byte InputPcmDataFormat { get; }
+    public byte OutputPcmDataFormat { get; }
+    public byte InputPcmSamplePayloadMsbPosition { get; }
+    public byte OutputPcmSamplePayloadMsbPosition { get; }
+    public byte InputDataPath { get; }
+    public byte OutputDataPath { get; }
+    public byte InputTransportUnitSize { get; }
+    public byte OutputTransportUnitSize { get; }
+    public ushort MaxLatency { get; }
+    public ushort PacketType { get; }
+    public byte RetransmissionEffort { get; }
+
+    public EnhancedAcceptSynchronousConnectionRequestCommand(ulong bdAdder, uint transmitBandwidth, uint receiveBandwidth,
+                                                            byte[] transmitCodingFormat, byte[] receiveCodingFormat,
+                                                            ushort transmitCodecFrameSize, ushort receiveCodecFrameSize,
+                                                            uint inputBandwidth, uint outputBandwidth,
+                                                            byte[] inputCodingFormat, byte[] outputCodingFormat,
+                                                            ushort inputCodedDataSize, ushort outputCodedDataSize,
+                                                            byte inputPcmDataFormat, byte outputPcmDataFormat,
+                                                            byte inputPcmSamplePayloadMsbPosition, byte outputPcmSamplePayloadMsbPosition,
+                                                            byte inputDataPath, byte outputDataPath,
+                                                            byte inputTransportUnitSize, byte outputTransportUnitSize,
+                                                            ushort maxLatency, ushort packetType, byte retransmissionEffort)
+        : base(new(HciOpcodes.EnhancedAcceptSynchronousConnectionRequest))
+    {
+        BdAdder = bdAdder;
+        TransmitBandwidth = transmitBandwidth;
+        ReceiveBandwidth = receiveBandwidth;
+        TransmitCodingFormat = transmitCodingFormat;
+        ReceiveCodingFormat = receiveCodingFormat;
+        TransmitCodecFrameSize = transmitCodecFrameSize;
+        ReceiveCodecFrameSize = receiveCodecFrameSize;
+        InputBandwidth = inputBandwidth;
+        OutputBandwidth = outputBandwidth;
+        InputCodingFormat = inputCodingFormat;
+        OutputCodingFormat = outputCodingFormat;
+        InputCodedDataSize = inputCodedDataSize;
+        OutputCodedDataSize = outputCodedDataSize;
+        InputPcmDataFormat = inputPcmDataFormat;
+        OutputPcmDataFormat = outputPcmDataFormat;
+        InputPcmSamplePayloadMsbPosition = inputPcmSamplePayloadMsbPosition;
+        OutputPcmSamplePayloadMsbPosition = outputPcmSamplePayloadMsbPosition;
+        InputDataPath = inputDataPath;
+        OutputDataPath = outputDataPath;
+        InputTransportUnitSize = inputTransportUnitSize;
+        OutputTransportUnitSize = outputTransportUnitSize;
+        MaxLatency = maxLatency;
+        PacketType = packetType;
+        RetransmissionEffort = retransmissionEffort;
+    }
+
+    public static EnhancedAcceptSynchronousConnectionRequestCommand Parse(ref HciSpanReader r)
+    {
+        return new EnhancedAcceptSynchronousConnectionRequestCommand(r.ReadU48(), r.ReadU32(), r.ReadU32(),
+                                                    r.ReadBytes(5).ToArray(), r.ReadBytes(5).ToArray(),
+                                                    r.ReadU16(), r.ReadU16(),
+                                                    r.ReadU32(), r.ReadU32(),
+                                                    r.ReadBytes(5).ToArray(), r.ReadBytes(5).ToArray(),
+                                                    r.ReadU16(), r.ReadU16(),
+                                                    r.ReadU8(), r.ReadU8(),
+                                                    r.ReadU8(), r.ReadU8(),
+                                                    r.ReadU8(), r.ReadU8(),
+                                                    r.ReadU8(), r.ReadU8(),
+                                                    r.ReadU16(), r.ReadU16(), r.ReadU8());
+    }
+}
+
+// 7.1.47 Truncated Page command
+public sealed class TruncatedPageCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+    public byte PageScanRepetitionMode { get; }
+    public ushort ClockOffset { get; }
+
+    public TruncatedPageCommand(ulong bdAdder, byte pageScanRepetitionMode, ushort clockOffset)
+        : base(new(HciOpcodes.TruncatedPage))
+    {
+        BdAdder = bdAdder;
+        PageScanRepetitionMode = pageScanRepetitionMode;
+        ClockOffset = clockOffset;
+    }
+
+    public static TruncatedPageCommand Parse(ref HciSpanReader r)
+    {
+        return new TruncatedPageCommand(r.ReadU48(), r.ReadU8(), r.ReadU16());
+    }
+}
+
+// 7.1.48 Truncated Page Cancel command
+public sealed class TruncatedPageCancelCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+
+    public TruncatedPageCancelCommand(ulong bdAdder)
+        : base(new(HciOpcodes.TruncatedPageCancel))
+    {
+        BdAdder = bdAdder;
+    }
+
+    public static TruncatedPageCancelCommand Parse(ref HciSpanReader r)
+    {
+        return new TruncatedPageCancelCommand(r.ReadU48());
+    }
+}
+
+// 7.1.49 Set Connectionless Peripheral Broadcast command
+public sealed class SetConnectionlessPeripheralBroadcastCommand : HciCommand
+{
+    public byte Enable { get; }
+    public byte LtAddr { get; }
+    public byte LpoAllowed { get; }
+    public ushort PacketType { get; }
+    public ushort IntervalMin { get; }
+    public ushort IntervalMax { get; }
+    public ushort SupervisionTimeout { get; }
+
+    public SetConnectionlessPeripheralBroadcastCommand(byte enable, byte ltAddr, byte lpoAllowed, ushort packetType,
+                                                        ushort intervalMin, ushort intervalMax,
+                                                        ushort supervisionTimeout)
+        : base(new(HciOpcodes.SetConnectionlessPeripheralBroadcast))
+    {
+        Enable = enable;
+        LtAddr = ltAddr;
+        LpoAllowed = lpoAllowed;
+        PacketType = packetType;
+        IntervalMin = intervalMin;
+        IntervalMax = intervalMax;
+        SupervisionTimeout = supervisionTimeout;
+    }
+
+    public static SetConnectionlessPeripheralBroadcastCommand Parse(ref HciSpanReader r)
+    {
+        return new SetConnectionlessPeripheralBroadcastCommand(r.ReadU8(), r.ReadU8(), r.ReadU8(), r.ReadU16(),
+                                                            r.ReadU16(), r.ReadU16(),
+                                                            r.ReadU16());
+    }
+}
+
+// 7.1.50 Set Connectionless Peripheral Broadcast Receive command
+public sealed class SetConnectionlessPeripheralBroadcastReceiveCommand : HciCommand
+{
+    public byte Enable { get; }
+    public ulong BdAdder { get; }
+    public byte LtAddr { get; }
+    public ushort Interval { get; }
+    public uint ClockOffset { get; }
+    public uint NextConnectionlessPeripheralBroadcastClock { get; }
+    public ushort SupervisionTimeout { get; }
+    public byte RemoteTimingAccuracy { get; }
+    public byte Skip { get; }
+    public ushort PacketType { get; }
+    public byte[] AfhChannelMap { get; }
+
+    public SetConnectionlessPeripheralBroadcastReceiveCommand(byte enable, ulong bdAdder, byte ltAddr, ushort interval,
+                                                            uint clockOffset, uint nextConnectionlessPeripheralBroadcastClock,
+                                                            ushort supervisionTimeout, byte remoteTimingAccuracy, byte skip,
+                                                            ushort packetType, byte[] afhChannelMap)
+        : base(new(HciOpcodes.SetConnectionlessPeripheralBroadcastReceive))
+    {
+        Enable = enable;
+        BdAdder = bdAdder;
+        LtAddr = ltAddr;
+        Interval = interval;
+        ClockOffset = clockOffset;
+        NextConnectionlessPeripheralBroadcastClock = nextConnectionlessPeripheralBroadcastClock;
+        SupervisionTimeout = supervisionTimeout;
+        RemoteTimingAccuracy = remoteTimingAccuracy;
+        Skip = skip;
+        PacketType = packetType;
+        AfhChannelMap = afhChannelMap;
+    }
+
+    public static SetConnectionlessPeripheralBroadcastReceiveCommand Parse(ref HciSpanReader r)
+    {
+        return new SetConnectionlessPeripheralBroadcastReceiveCommand(r.ReadU8(), r.ReadU48(), r.ReadU8(), r.ReadU16(),
+                                                                    r.ReadU32(), r.ReadU32(),
+                                                                    r.ReadU16(), r.ReadU8(), r.ReadU8(),
+                                                                    r.ReadU16(), r.ReadBytes(10).ToArray());
+    }
+}
+
+// 7.1.51 Start Synchronization Train command
+public sealed class StartSynchronizationTrainCommand : HciCommand
+{
+    public StartSynchronizationTrainCommand()
+        : base(new(HciOpcodes.StartSynchronizationTrain))
+    {
+    }
+
+    public static StartSynchronizationTrainCommand Parse(ref HciSpanReader r)
+    {
+        return new StartSynchronizationTrainCommand();
+    }
+}
+
+// 7.1.52 Receive Synchronization Train command
+public sealed class ReceiveSynchronizationTrainCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+    public ushort SynchronizationScanTimeout { get; }
+    public ushort SynchronizationScanWindow { get; }
+    public ushort SynchronizationScanInterval { get; }
+
+    public ReceiveSynchronizationTrainCommand(ulong bdAdder, ushort synchronizationScanTimeout,
+                                            ushort synchronizationScanWindow, ushort synchronizationScanInterval)
+        : base(new(HciOpcodes.ReceiveSynchronizationTrain))
+    {
+        BdAdder = bdAdder;
+        SynchronizationScanTimeout = synchronizationScanTimeout;
+        SynchronizationScanWindow = synchronizationScanWindow;
+        SynchronizationScanInterval = synchronizationScanInterval;
+    }
+
+    public static ReceiveSynchronizationTrainCommand Parse(ref HciSpanReader r)
+    {
+        return new ReceiveSynchronizationTrainCommand(r.ReadU48(), r.ReadU16(), r.ReadU16(), r.ReadU16());
+    }
+}
+
+// 7.1.53 Remote OOB Extended Data Request Reply command
+public sealed class RemoteOobExtendedDataRequestReplyCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+    public byte[] SimplePairingHashC192 { get; }
+    public byte[] SimplePairingRandomizerR192 { get; }
+    public byte[] SimplePairingHashC256 { get; }
+    public byte[] SimplePairingRandomizerR256 { get; }
+
+    public RemoteOobExtendedDataRequestReplyCommand(ulong bdAdder, byte[] simplePairingHashC192, byte[] simplePairingRandomizerR192,
+                                                    byte[] simplePairingHashC256, byte[] simplePairingRandomizerR256)
+        : base(new(HciOpcodes.RemoteOobExtendedDataRequestReply))
+    {
+        BdAdder = bdAdder;
+        SimplePairingHashC192 = simplePairingHashC192;
+        SimplePairingRandomizerR192 = simplePairingRandomizerR192;
+        SimplePairingHashC256 = simplePairingHashC256;
+        SimplePairingRandomizerR256 = simplePairingRandomizerR256;
+    }
+
+    public static RemoteOobExtendedDataRequestReplyCommand Parse(ref HciSpanReader r)
+    {
+        return new RemoteOobExtendedDataRequestReplyCommand(r.ReadU48(),
+                                                            r.ReadBytes(16).ToArray(),
+                                                            r.ReadBytes(16).ToArray(),
+                                                            r.ReadBytes(16).ToArray(),
+                                                            r.ReadBytes(16).ToArray());
+    }
+}
+
 #endregion 7.1 Link Control commands
 
 #region 7.2 Link Policy commands

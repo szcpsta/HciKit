@@ -51,6 +51,15 @@ public static class HciOpcodes
     public const ushort RemoteOobDataRequestReply = 0x0430;
     public const ushort RemoteOobDataRequestNegativeReply = 0x0433;
     public const ushort IoCapabilityRequestNegativeReply = 0x0434;
+    public const ushort EnhancedSetupSynchronousConnection = 0x043D;
+    public const ushort EnhancedAcceptSynchronousConnectionRequest = 0x043E;
+    public const ushort TruncatedPage = 0x043F;
+    public const ushort TruncatedPageCancel = 0x0440;
+    public const ushort SetConnectionlessPeripheralBroadcast = 0x0441;
+    public const ushort SetConnectionlessPeripheralBroadcastReceive = 0x0442;
+    public const ushort StartSynchronizationTrain = 0x0443;
+    public const ushort ReceiveSynchronizationTrain = 0x0444;
+    public const ushort RemoteOobExtendedDataRequestReply = 0x0445;
     #endregion 7.1 Link Control commands
 
     #region 7.2 Link Policy commands

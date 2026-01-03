@@ -321,6 +321,60 @@ public class HciCommandTests
 
     }
 
+    [Fact(Skip = "TODO: Opcode=0x043D")]
+    public void EnhancedSetupSynchronousConnectionCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x043E")]
+    public void EnhancedAcceptSynchronousConnectionRequestCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x043F")]
+    public void TruncatedPageCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0440")]
+    public void TruncatedPageCancelCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0441")]
+    public void SetConnectionlessPeripheralBroadcastCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0442")]
+    public void SetConnectionlessPeripheralBroadcastReceiveCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0443")]
+    public void StartSynchronizationTrainCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0444")]
+    public void ReceiveSynchronizationTrainCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0445")]
+    public void RemoteOobExtendedDataRequestReplyCommandTest()
+    {
+
+    }
+
     [Fact]
     public void SniffModeCommandTest()
     {
