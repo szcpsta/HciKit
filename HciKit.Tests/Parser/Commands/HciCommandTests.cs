@@ -378,6 +378,12 @@ public class HciCommandTests
     #endregion 7.1 Link Control commands (OGF: 0x01)
 
     #region 7.2 Link Policy commands (OGF: 0x02)
+    [Fact(Skip = "TODO: Opcode=0x0801")]
+    public void HoldModeCommandTest()
+    {
+
+    }
+
     [Fact]
     public void SniffModeCommandTest()
     {
@@ -406,6 +412,77 @@ public class HciCommandTests
         Assert.NotNull(cmd);
         Assert.Equal(0x0804, cmd.Opcode.Value);
         Assert.Equal(0x0003, cmd.ConnectionHandle);
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0807")]
+    public void QoSSetupCommandTest()
+    {
+
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0809")]
+    public void RoleDiscoveryCommandTest()
+    {
+
+    }
+
+    [Fact]
+    public void SwitchRoleCommandTest()
+    {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0xb, 0x8, 0x7, 0x44, 0x50, 0x97, 0xc2, 0xe4, 0x10, 0x0];
+
+        var cmd = parser.Parse(packet) as SwitchRoleCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x080B, cmd.Opcode.Value);
+        Assert.Equal((ulong)0x10e4c2975044, cmd.BdAdder);
+        Assert.Equal(0x00, cmd.Role);
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x080C")]
+    public void ReadLinkPolicySettingsCommandTest()
+    {
+
+    }
+
+    [Fact]
+    public void WriteLinkPolicySettingsCommandTest()
+    {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0xd, 0x8, 0x4, 0x3, 0x0, 0x5, 0x0];
+
+        var cmd = parser.Parse(packet) as WriteLinkPolicySettingsCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x080D, cmd.Opcode.Value);
+        Assert.Equal(0x0003, cmd.ConnectionHandle);
+        Assert.Equal(0x0005, cmd.LinkPolicySettings);
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x080E")]
+    public void ReadDefaultLinkPolicySettingsCommandTest()
+    {
+
+    }
+
+    [Fact]
+    public void WriteDefaultLinkPolicySettingsCommandTest()
+    {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0xf, 0x8, 0x2, 0x5, 0x0];
+
+        var cmd = parser.Parse(packet) as WriteDefaultLinkPolicySettingsCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x080F, cmd.Opcode.Value);
+        Assert.Equal(0x0005, cmd.DefaultLinkPolicySettings);
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x0810")]
+    public void FlowSpecificationCommandTest()
+    {
+
     }
 
     [Fact]

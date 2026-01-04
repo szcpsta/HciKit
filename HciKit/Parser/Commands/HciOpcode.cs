@@ -63,8 +63,17 @@ public static class HciOpcodes
     #endregion 7.1 Link Control commands
 
     #region 7.2 Link Policy commands
+    public const ushort HoldMode = 0x0801;
     public const ushort SniffMode = 0x0803;
     public const ushort ExitSniffMode = 0x0804;
+    public const ushort QoSSetup = 0x0807;
+    public const ushort RoleDiscovery = 0x0809;
+    public const ushort SwitchRole = 0x080B;
+    public const ushort ReadLinkPolicySettings = 0x080C;
+    public const ushort WriteLinkPolicySettings = 0x080D;
+    public const ushort ReadDefaultLinkPolicySettings = 0x080E;
+    public const ushort WriteDefaultLinkPolicySettings = 0x080F;
+    public const ushort FlowSpecification = 0x0810;
     public const ushort SniffSubrating = 0x0811;
     #endregion 7.2 Link Policy commands
 

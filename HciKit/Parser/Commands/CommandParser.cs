@@ -74,8 +74,17 @@ internal class CommandParser
             HciOpcodes.ReceiveSynchronizationTrain => ReceiveSynchronizationTrainCommand.Parse(ref r),
             HciOpcodes.RemoteOobExtendedDataRequestReply => RemoteOobExtendedDataRequestReplyCommand.Parse(ref r),
             // 7.2 Link Policy commands (OGF: 0x02)
+            HciOpcodes.HoldMode => HoldModeCommand.Parse(ref r),
             HciOpcodes.SniffMode => SniffModeCommand.Parse(ref r),
             HciOpcodes.ExitSniffMode => ExitSniffModeCommand.Parse(ref r),
+            HciOpcodes.QoSSetup => QoSSetupCommand.Parse(ref r),
+            HciOpcodes.RoleDiscovery => RoleDiscoveryCommand.Parse(ref r),
+            HciOpcodes.SwitchRole => SwitchRoleCommand.Parse(ref r),
+            HciOpcodes.ReadLinkPolicySettings => ReadLinkPolicySettingsCommand.Parse(ref r),
+            HciOpcodes.WriteLinkPolicySettings => WriteLinkPolicySettingsCommand.Parse(ref r),
+            HciOpcodes.ReadDefaultLinkPolicySettings => ReadDefaultLinkPolicySettingsCommand.Parse(ref r),
+            HciOpcodes.WriteDefaultLinkPolicySettings => WriteDefaultLinkPolicySettingsCommand.Parse(ref r),
+            HciOpcodes.FlowSpecification => FlowSpecificationCommand.Parse(ref r),
             HciOpcodes.SniffSubrating => SniffSubratingCommand.Parse(ref r),
             // 7.3 Controller & Baseband commands (OGF: 0x03)
             HciOpcodes.WriteScanEnable => WriteScanEnableCommand.Parse(ref r),

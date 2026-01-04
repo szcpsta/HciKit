@@ -1061,6 +1061,27 @@ public sealed class RemoteOobExtendedDataRequestReplyCommand : HciCommand
 #endregion 7.1 Link Control commands
 
 #region 7.2 Link Policy commands
+// 7.2.1 Hold Mode command
+public sealed class HoldModeCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+    public ushort HoldModeMaxInterval { get; }
+    public ushort HoldModeMinInterval { get; }
+
+    public HoldModeCommand(ushort connectionHandle, ushort holdModeMaxInterval, ushort holdModeMinInterval)
+        : base(new(HciOpcodes.HoldMode))
+    {
+        ConnectionHandle = connectionHandle;
+        HoldModeMaxInterval = holdModeMaxInterval;
+        HoldModeMinInterval = holdModeMinInterval;
+    }
+
+    public static HoldModeCommand Parse(ref HciSpanReader r)
+    {
+        return new HoldModeCommand(r.ReadU16(), r.ReadU16(), r.ReadU16());
+    }
+}
+
 // 7.2.2 Sniff Mode command
 public sealed class SniffModeCommand : HciCommand
 {
@@ -1100,6 +1121,173 @@ public sealed class ExitSniffModeCommand : HciCommand
     public static ExitSniffModeCommand Parse(ref HciSpanReader r)
     {
         return new ExitSniffModeCommand(r.ReadU16());
+    }
+}
+
+// 7.2.6 QoS Setup command
+public sealed class QoSSetupCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+    public byte Unused { get; }
+    public byte ServiceType { get; }
+    public uint TokenRate { get; }
+    public uint PeakBandwidth { get; }
+    public uint Latency { get; }
+    public uint DelayVariation { get; }
+
+    public QoSSetupCommand(ushort connectionHandle, byte unused, byte serviceType,
+                            uint tokenRate, uint peakBandwidth, uint latency, uint delayVariation)
+        : base(new(HciOpcodes.QoSSetup))
+    {
+        ConnectionHandle = connectionHandle;
+        Unused = unused;
+        ServiceType = serviceType;
+        TokenRate = tokenRate;
+        PeakBandwidth = peakBandwidth;
+        Latency = latency;
+        DelayVariation = delayVariation;
+    }
+
+    public static QoSSetupCommand Parse(ref HciSpanReader r)
+    {
+        return new QoSSetupCommand(r.ReadU16(), r.ReadU8(), r.ReadU8(),
+                                    r.ReadU32(), r.ReadU32(), r.ReadU32(), r.ReadU32());
+    }
+}
+
+// 7.2.7 Role Discovery command
+public sealed class RoleDiscoveryCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+
+    public RoleDiscoveryCommand(ushort connectionHandle)
+        : base(new(HciOpcodes.RoleDiscovery))
+    {
+        ConnectionHandle = connectionHandle;
+    }
+
+    public static RoleDiscoveryCommand Parse(ref HciSpanReader r)
+    {
+        return new RoleDiscoveryCommand(r.ReadU16());
+    }
+}
+
+// 7.2.8 Switch Role command
+public sealed class SwitchRoleCommand : HciCommand
+{
+    public ulong BdAdder { get; }
+    public byte Role { get; }
+
+    public SwitchRoleCommand(ulong bdAdder, byte role)
+        : base(new(HciOpcodes.SwitchRole))
+    {
+        BdAdder = bdAdder;
+        Role = role;
+    }
+
+    public static SwitchRoleCommand Parse(ref HciSpanReader r)
+    {
+        return new SwitchRoleCommand(r.ReadU48(), r.ReadU8());
+    }
+}
+
+// 7.2.9 Read Link Policy Settings command
+public sealed class ReadLinkPolicySettingsCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+
+    public ReadLinkPolicySettingsCommand(ushort connectionHandle)
+        : base(new(HciOpcodes.ReadLinkPolicySettings))
+    {
+        ConnectionHandle = connectionHandle;
+    }
+
+    public static ReadLinkPolicySettingsCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadLinkPolicySettingsCommand(r.ReadU16());
+    }
+}
+
+// 7.2.10 Write Link Policy Settings command
+public sealed class WriteLinkPolicySettingsCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+    public ushort LinkPolicySettings { get; }
+
+    public WriteLinkPolicySettingsCommand(ushort connectionHandle, ushort linkPolicySettings)
+        : base(new(HciOpcodes.WriteLinkPolicySettings))
+    {
+        ConnectionHandle = connectionHandle;
+        LinkPolicySettings = linkPolicySettings;
+    }
+
+    public static WriteLinkPolicySettingsCommand Parse(ref HciSpanReader r)
+    {
+        return new WriteLinkPolicySettingsCommand(r.ReadU16(), r.ReadU16());
+    }
+}
+
+// 7.2.11 Read Default Link Policy Settings command
+public sealed class ReadDefaultLinkPolicySettingsCommand : HciCommand
+{
+    public ReadDefaultLinkPolicySettingsCommand()
+        : base(new(HciOpcodes.ReadDefaultLinkPolicySettings))
+    {
+    }
+
+    public static ReadDefaultLinkPolicySettingsCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadDefaultLinkPolicySettingsCommand();
+    }
+}
+
+// 7.2.12 Write Default Link Policy Settings command
+public sealed class WriteDefaultLinkPolicySettingsCommand : HciCommand
+{
+    public ushort DefaultLinkPolicySettings { get; }
+
+    public WriteDefaultLinkPolicySettingsCommand(ushort defaultLinkPolicySettings)
+        : base(new(HciOpcodes.WriteDefaultLinkPolicySettings))
+    {
+        DefaultLinkPolicySettings = defaultLinkPolicySettings;
+    }
+
+    public static WriteDefaultLinkPolicySettingsCommand Parse(ref HciSpanReader r)
+    {
+        return new WriteDefaultLinkPolicySettingsCommand(r.ReadU16());
+    }
+}
+
+// 7.2.13 Flow Specification command
+public sealed class FlowSpecificationCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+    public byte Unused { get; }
+    public byte FlowDirection { get; }
+    public byte ServiceType { get; }
+    public uint TokenRate { get; }
+    public uint TokenBucketSize { get; }
+    public uint PeakBandwidth { get; }
+    public uint AccessLatency { get; }
+
+    public FlowSpecificationCommand(ushort connectionHandle, byte unused, byte flowDirection, byte serviceType,
+                                    uint tokenRate, uint tokenBucketSize, uint peakBandwidth, uint accessLatency)
+        : base(new(HciOpcodes.FlowSpecification))
+    {
+        ConnectionHandle = connectionHandle;
+        Unused = unused;
+        FlowDirection = flowDirection;
+        ServiceType = serviceType;
+        TokenRate = tokenRate;
+        TokenBucketSize = tokenBucketSize;
+        PeakBandwidth = peakBandwidth;
+        AccessLatency = accessLatency;
+    }
+
+    public static FlowSpecificationCommand Parse(ref HciSpanReader r)
+    {
+        return new FlowSpecificationCommand(r.ReadU16(), r.ReadU8(), r.ReadU8(), r.ReadU8(),
+                                            r.ReadU32(), r.ReadU32(), r.ReadU32(), r.ReadU32());
     }
 }
 
