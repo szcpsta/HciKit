@@ -622,6 +622,52 @@ public class HciCommandTests
     }
     #endregion 7.4 Informational parameters (OGF: 0x04)
 
+    #region 7.5 Status parameters (OGF: 0x05)
+    [Fact(Skip = "TODO: Opcode=0x1401")]
+    public void ReadFailedContactCounterCommandTest()
+    {
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x1402")]
+    public void ResetFailedContactCounterCommandTest()
+    {
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x1403")]
+    public void ReadLinkQualityCommandTest()
+    {
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x1405")]
+    public void ReadRssiCommandTest()
+    {
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x1406")]
+    public void ReadAfhChannelMapCommandTest()
+    {
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x1407")]
+    public void ReadClockCommandTest()
+    {
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x1408")]
+    public void ReadEncryptionKeySizeCommandTest()
+    {
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x140C")]
+    public void GetMwsTransportLayerConfigurationCommandTest()
+    {
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x140D")]
+    public void SetTriggeredClockCaptureCommandTest()
+    {
+    }
+    #endregion 7.5 Status parameters (OGF: 0x05)
     #region 7.8 LE Controller commands (OCF: 0x08)
     [Fact]
     public void LeSetExtendedAdvertisingParametersV1CommandTest()
