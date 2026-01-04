@@ -1697,6 +1697,93 @@ public sealed class SetTriggeredClockCaptureCommand : HciCommand
 }
 
 #endregion 7.5 Status Parameters
+
+#region 7.6 Testing commands
+// 7.6.1 Read Loopback Mode command
+public sealed class ReadLoopbackModeCommand : HciCommand
+{
+    public ReadLoopbackModeCommand()
+        : base(new(HciOpcodes.ReadLoopbackMode))
+    {
+    }
+
+    public static ReadLoopbackModeCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadLoopbackModeCommand();
+    }
+}
+
+// 7.6.2 Write Loopback Mode command
+public sealed class WriteLoopbackModeCommand : HciCommand
+{
+    public byte LoopbackMode { get; }
+
+    public WriteLoopbackModeCommand(byte loopbackMode)
+        : base(new(HciOpcodes.WriteLoopbackMode))
+    {
+        LoopbackMode = loopbackMode;
+    }
+
+    public static WriteLoopbackModeCommand Parse(ref HciSpanReader r)
+    {
+        return new WriteLoopbackModeCommand(r.ReadU8());
+    }
+}
+
+// 7.6.3 Enable Implementation Under Test Mode command
+public sealed class EnableImplementationUnderTestModeCommand : HciCommand
+{
+    public EnableImplementationUnderTestModeCommand()
+        : base(new(HciOpcodes.EnableImplementationUnderTestMode))
+    {
+    }
+
+    public static EnableImplementationUnderTestModeCommand Parse(ref HciSpanReader r)
+    {
+        return new EnableImplementationUnderTestModeCommand();
+    }
+}
+
+// 7.6.4 Write Simple Pairing Debug Mode command
+public sealed class WriteSimplePairingDebugModeCommand : HciCommand
+{
+    public byte SimplePairingDebugMode { get; }
+
+    public WriteSimplePairingDebugModeCommand(byte simplePairingDebugMode)
+        : base(new(HciOpcodes.WriteSimplePairingDebugMode))
+    {
+        SimplePairingDebugMode = simplePairingDebugMode;
+    }
+
+    public static WriteSimplePairingDebugModeCommand Parse(ref HciSpanReader r)
+    {
+        return new WriteSimplePairingDebugModeCommand(r.ReadU8());
+    }
+}
+
+// 7.6.8 Write Secure Connections Test Mode command
+public sealed class WriteSecureConnectionsTestModeCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+    public byte Dm1AclUMode { get; }
+    public byte EscoLoopbackMode { get; }
+
+    public WriteSecureConnectionsTestModeCommand(ushort connectionHandle, byte dm1AclUMode, byte escoLoopbackMode)
+        : base(new(HciOpcodes.WriteSecureConnectionsTestMode))
+    {
+        ConnectionHandle = connectionHandle;
+        Dm1AclUMode = dm1AclUMode;
+        EscoLoopbackMode = escoLoopbackMode;
+    }
+
+    public static WriteSecureConnectionsTestModeCommand Parse(ref HciSpanReader r)
+    {
+        return new WriteSecureConnectionsTestModeCommand(r.ReadU16(), r.ReadU8(), r.ReadU8());
+    }
+}
+
+#endregion 7.6 Testing commands
+
 #region 7.8 LE Controller commands
 // 7.8.53 LE Set Extended Advertising Parameters command
 public sealed class LeSetExtendedAdvertisingParametersV1Command : HciCommand

@@ -111,6 +111,12 @@ internal class CommandParser
             HciOpcodes.ReadEncryptionKeySize => ReadEncryptionKeySizeCommand.Parse(ref r),
             HciOpcodes.GetMwsTransportLayerConfiguration => GetMwsTransportLayerConfigurationCommand.Parse(ref r),
             HciOpcodes.SetTriggeredClockCapture => SetTriggeredClockCaptureCommand.Parse(ref r),
+            // 7.6 Testing commands (OGF: 0x06)
+            HciOpcodes.ReadLoopbackMode => ReadLoopbackModeCommand.Parse(ref r),
+            HciOpcodes.WriteLoopbackMode => WriteLoopbackModeCommand.Parse(ref r),
+            HciOpcodes.EnableImplementationUnderTestMode => EnableImplementationUnderTestModeCommand.Parse(ref r),
+            HciOpcodes.WriteSimplePairingDebugMode => WriteSimplePairingDebugModeCommand.Parse(ref r),
+            HciOpcodes.WriteSecureConnectionsTestMode => WriteSecureConnectionsTestModeCommand.Parse(ref r),
             // 7.8 LE Controller commands (OCF: 0x08)
             HciOpcodes.LeSetExtendedAdvertisingParametersV1 => LeSetExtendedAdvertisingParametersV1Command.Parse(ref r),
             HciOpcodes.LeSetExtendedAdvertisingEnable => LeSetExtendedAdvertisingEnableCommand.Parse(ref r),
