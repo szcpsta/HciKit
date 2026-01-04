@@ -101,6 +101,16 @@ internal class CommandParser
             HciOpcodes.ReadLocalSupportedCodecsV2 => ReadLocalSupportedCodecsV2Command.Parse(ref r),
             HciOpcodes.ReadLocalSupportedCodecCapabilities => ReadLocalSupportedCodecCapabilitiesCommand.Parse(ref r),
             HciOpcodes.ReadLocalSupportedControllerDelay => ReadLocalSupportedControllerDelayCommand.Parse(ref r),
+            // 7.5 Status Parameters (OGF: 0x05)
+            HciOpcodes.ReadFailedContactCounter => ReadFailedContactCounterCommand.Parse(ref r),
+            HciOpcodes.ResetFailedContactCounter => ResetFailedContactCounterCommand.Parse(ref r),
+            HciOpcodes.ReadLinkQuality => ReadLinkQualityCommand.Parse(ref r),
+            HciOpcodes.ReadRssi => ReadRssiCommand.Parse(ref r),
+            HciOpcodes.ReadAfhChannelMap => ReadAfhChannelMapCommand.Parse(ref r),
+            HciOpcodes.ReadClock => ReadClockCommand.Parse(ref r),
+            HciOpcodes.ReadEncryptionKeySize => ReadEncryptionKeySizeCommand.Parse(ref r),
+            HciOpcodes.GetMwsTransportLayerConfiguration => GetMwsTransportLayerConfigurationCommand.Parse(ref r),
+            HciOpcodes.SetTriggeredClockCapture => SetTriggeredClockCaptureCommand.Parse(ref r),
             // 7.8 LE Controller commands (OCF: 0x08)
             HciOpcodes.LeSetExtendedAdvertisingParametersV1 => LeSetExtendedAdvertisingParametersV1Command.Parse(ref r),
             HciOpcodes.LeSetExtendedAdvertisingEnable => LeSetExtendedAdvertisingEnableCommand.Parse(ref r),

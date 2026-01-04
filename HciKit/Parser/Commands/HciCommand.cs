@@ -1534,6 +1534,169 @@ public sealed class ReadLocalSupportedControllerDelayCommand : HciCommand
 
 #endregion 7.4 Informational Parameters
 
+#region 7.5 Status Parameters
+// 7.5.1 Read Failed Contact Counter command
+public sealed class ReadFailedContactCounterCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+
+    public ReadFailedContactCounterCommand(ushort connectionHandle)
+        : base(new(HciOpcodes.ReadFailedContactCounter))
+    {
+        ConnectionHandle = connectionHandle;
+    }
+
+    public static ReadFailedContactCounterCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadFailedContactCounterCommand(r.ReadU16());
+    }
+}
+
+// 7.5.2 Reset Failed Contact Counter command
+public sealed class ResetFailedContactCounterCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+
+    public ResetFailedContactCounterCommand(ushort connectionHandle)
+        : base(new(HciOpcodes.ResetFailedContactCounter))
+    {
+        ConnectionHandle = connectionHandle;
+    }
+
+    public static ResetFailedContactCounterCommand Parse(ref HciSpanReader r)
+    {
+        return new ResetFailedContactCounterCommand(r.ReadU16());
+    }
+}
+
+// 7.5.3 Read Link Quality command
+public sealed class ReadLinkQualityCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+
+    public ReadLinkQualityCommand(ushort connectionHandle)
+        : base(new(HciOpcodes.ReadLinkQuality))
+    {
+        ConnectionHandle = connectionHandle;
+    }
+
+    public static ReadLinkQualityCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadLinkQualityCommand(r.ReadU16());
+    }
+}
+
+// 7.5.4 Read RSSI command
+public sealed class ReadRssiCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+
+    public ReadRssiCommand(ushort connectionHandle)
+        : base(new(HciOpcodes.ReadRssi))
+    {
+        ConnectionHandle = connectionHandle;
+    }
+
+    public static ReadRssiCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadRssiCommand(r.ReadU16());
+    }
+}
+
+// 7.5.5 Read AFH Channel Map command
+public sealed class ReadAfhChannelMapCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+
+    public ReadAfhChannelMapCommand(ushort connectionHandle)
+        : base(new(HciOpcodes.ReadAfhChannelMap))
+    {
+        ConnectionHandle = connectionHandle;
+    }
+
+    public static ReadAfhChannelMapCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadAfhChannelMapCommand(r.ReadU16());
+    }
+}
+
+// 7.5.6 Read Clock command
+public sealed class ReadClockCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+    public byte WhichClock { get; }
+
+    public ReadClockCommand(ushort connectionHandle, byte whichClock)
+        : base(new(HciOpcodes.ReadClock))
+    {
+        ConnectionHandle = connectionHandle;
+        WhichClock = whichClock;
+    }
+
+    public static ReadClockCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadClockCommand(r.ReadU16(), r.ReadU8());
+    }
+}
+
+// 7.5.7 Read Encryption Key Size command
+public sealed class ReadEncryptionKeySizeCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+
+    public ReadEncryptionKeySizeCommand(ushort connectionHandle)
+        : base(new(HciOpcodes.ReadEncryptionKeySize))
+    {
+        ConnectionHandle = connectionHandle;
+    }
+
+    public static ReadEncryptionKeySizeCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadEncryptionKeySizeCommand(r.ReadU16());
+    }
+}
+
+// 7.5.11 Get MWS Transport Layer Configuration command
+public sealed class GetMwsTransportLayerConfigurationCommand : HciCommand
+{
+    public GetMwsTransportLayerConfigurationCommand()
+        : base(new(HciOpcodes.GetMwsTransportLayerConfiguration))
+    {
+    }
+
+    public static GetMwsTransportLayerConfigurationCommand Parse(ref HciSpanReader r)
+    {
+        return new GetMwsTransportLayerConfigurationCommand();
+    }
+}
+
+// 7.5.12 Set Triggered Clock Capture command
+public sealed class SetTriggeredClockCaptureCommand : HciCommand
+{
+    public ushort ConnectionHandle { get; }
+    public byte Enable { get; }
+    public byte WhichClock { get; }
+    public byte LpoAllowed { get; }
+    public byte NumClockCapturesToFilter { get; }
+
+    public SetTriggeredClockCaptureCommand(ushort connectionHandle, byte enable, byte whichClock,
+                                            byte lpoAllowed, byte numClockCapturesToFilter)
+        : base(new(HciOpcodes.SetTriggeredClockCapture))
+    {
+        ConnectionHandle = connectionHandle;
+        Enable = enable;
+        WhichClock = whichClock;
+        LpoAllowed = lpoAllowed;
+        NumClockCapturesToFilter = numClockCapturesToFilter;
+    }
+
+    public static SetTriggeredClockCaptureCommand Parse(ref HciSpanReader r)
+    {
+        return new SetTriggeredClockCaptureCommand(r.ReadU16(), r.ReadU8(), r.ReadU8(), r.ReadU8(), r.ReadU8());
+    }
+}
+
+#endregion 7.5 Status Parameters
 #region 7.8 LE Controller commands
 // 7.8.53 LE Set Extended Advertising Parameters command
 public sealed class LeSetExtendedAdvertisingParametersV1Command : HciCommand

@@ -96,6 +96,18 @@ public static class HciOpcodes
     public const ushort ReadLocalSupportedControllerDelay = 0x100F;
     #endregion 7.4 Informational Parameters
 
+    #region 7.5 Status Parameters
+    public const ushort ReadFailedContactCounter = 0x1401;
+    public const ushort ResetFailedContactCounter = 0x1402;
+    public const ushort ReadLinkQuality = 0x1403;
+    public const ushort ReadRssi = 0x1405;
+    public const ushort ReadAfhChannelMap = 0x1406;
+    public const ushort ReadClock = 0x1407;
+    public const ushort ReadEncryptionKeySize = 0x1408;
+    public const ushort GetMwsTransportLayerConfiguration = 0x140C;
+    public const ushort SetTriggeredClockCapture = 0x140D;
+    #endregion 7.5 Status Parameters
+
     #region 7.8 LE Controller commands
     public const ushort LeSetExtendedAdvertisingParametersV1 = 0x2036;
     public const ushort LeSetExtendedAdvertisingEnable = 0x2039;
