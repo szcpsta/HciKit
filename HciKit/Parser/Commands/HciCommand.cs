@@ -1336,6 +1336,204 @@ public sealed class WriteScanEnableCommand : HciCommand
 
 #endregion 7.3 Controller & Baseband commands
 
+#region 7.4 Informational Parameters
+// 7.4.1 Read Local Version Information command
+public sealed class ReadLocalVersionInformationCommand : HciCommand
+{
+    public ReadLocalVersionInformationCommand()
+        : base(new(HciOpcodes.ReadLocalVersionInformation))
+    {
+    }
+
+    public static ReadLocalVersionInformationCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadLocalVersionInformationCommand();
+    }
+}
+
+// 7.4.2 Read Local Supported Commands command
+public sealed class ReadLocalSupportedCommandsCommand : HciCommand
+{
+    public ReadLocalSupportedCommandsCommand()
+        : base(new(HciOpcodes.ReadLocalSupportedCommands))
+    {
+    }
+
+    public static ReadLocalSupportedCommandsCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadLocalSupportedCommandsCommand();
+    }
+}
+
+// 7.4.3 Read Local Supported Features command
+public sealed class ReadLocalSupportedFeaturesCommand : HciCommand
+{
+    public ReadLocalSupportedFeaturesCommand()
+        : base(new(HciOpcodes.ReadLocalSupportedFeatures))
+    {
+    }
+
+    public static ReadLocalSupportedFeaturesCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadLocalSupportedFeaturesCommand();
+    }
+}
+
+// 7.4.4 Read Local Extended Features command
+public sealed class ReadLocalExtendedFeaturesCommand : HciCommand
+{
+    public byte PageNumber { get; }
+
+    public ReadLocalExtendedFeaturesCommand(byte pageNumber)
+        : base(new(HciOpcodes.ReadLocalExtendedFeatures))
+    {
+        PageNumber = pageNumber;
+    }
+
+    public static ReadLocalExtendedFeaturesCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadLocalExtendedFeaturesCommand(r.ReadU8());
+    }
+}
+
+// 7.4.5 Read Buffer Size command
+public sealed class ReadBufferSizeCommand : HciCommand
+{
+    public ReadBufferSizeCommand()
+        : base(new(HciOpcodes.ReadBufferSize))
+    {
+    }
+
+    public static ReadBufferSizeCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadBufferSizeCommand();
+    }
+}
+
+// 7.4.6 Read BD_ADDR command
+public sealed class ReadBdAddrCommand : HciCommand
+{
+    public ReadBdAddrCommand()
+        : base(new(HciOpcodes.ReadBdAddr))
+    {
+    }
+
+    public static ReadBdAddrCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadBdAddrCommand();
+    }
+}
+
+// 7.4.7 Read Data Block Size command
+public sealed class ReadDataBlockSizeCommand : HciCommand
+{
+    public ReadDataBlockSizeCommand()
+        : base(new(HciOpcodes.ReadDataBlockSize))
+    {
+    }
+
+    public static ReadDataBlockSizeCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadDataBlockSizeCommand();
+    }
+}
+
+// 7.4.8 Read Local Supported Codecs command [v2]
+public sealed class ReadLocalSupportedCodecsV2Command : HciCommand
+{
+    public ReadLocalSupportedCodecsV2Command()
+        : base(new(HciOpcodes.ReadLocalSupportedCodecsV2))
+    {
+    }
+
+    public static ReadLocalSupportedCodecsV2Command Parse(ref HciSpanReader r)
+    {
+        return new ReadLocalSupportedCodecsV2Command();
+    }
+}
+
+// 7.4.8 Read Local Supported Codecs command [v1]
+public sealed class ReadLocalSupportedCodecsV1Command : HciCommand
+{
+    public ReadLocalSupportedCodecsV1Command()
+        : base(new(HciOpcodes.ReadLocalSupportedCodecsV1))
+    {
+    }
+
+    public static ReadLocalSupportedCodecsV1Command Parse(ref HciSpanReader r)
+    {
+        return new ReadLocalSupportedCodecsV1Command();
+    }
+}
+
+// 7.4.9 Read Local Simple Pairing Options command
+public sealed class ReadLocalSimplePairingOptionsCommand : HciCommand
+{
+    public ReadLocalSimplePairingOptionsCommand()
+        : base(new(HciOpcodes.ReadLocalSimplePairingOptions))
+    {
+    }
+
+    public static ReadLocalSimplePairingOptionsCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadLocalSimplePairingOptionsCommand();
+    }
+}
+
+// 7.4.10 Read Local Supported Codec Capabilities command
+public sealed class ReadLocalSupportedCodecCapabilitiesCommand : HciCommand
+{
+    public byte[] CodecId { get; }
+    public byte LogicalTransportType { get; }
+    public byte Direction { get; }
+
+    public ReadLocalSupportedCodecCapabilitiesCommand(byte[] codecId, byte logicalTransportType, byte direction)
+        : base(new(HciOpcodes.ReadLocalSupportedCodecCapabilities))
+    {
+        CodecId = codecId;
+        LogicalTransportType = logicalTransportType;
+        Direction = direction;
+    }
+
+    public static ReadLocalSupportedCodecCapabilitiesCommand Parse(ref HciSpanReader r)
+    {
+        return new ReadLocalSupportedCodecCapabilitiesCommand(r.ReadBytes(5).ToArray(), r.ReadU8(), r.ReadU8());
+    }
+}
+
+// 7.4.11 Read Local Supported Controller Delay command
+public sealed class ReadLocalSupportedControllerDelayCommand : HciCommand
+{
+    public byte[] CodecId { get; }
+    public byte LogicalTransportType { get; }
+    public byte Direction { get; }
+    public byte CodecConfigurationLength { get; }
+    public byte[] CodecConfiguration { get; }
+
+    public ReadLocalSupportedControllerDelayCommand(byte[] codecId, byte logicalTransportType, byte direction,
+                                                    byte codecConfigurationLength, byte[] codecConfiguration)
+        : base(new(HciOpcodes.ReadLocalSupportedControllerDelay))
+    {
+        CodecId = codecId;
+        LogicalTransportType = logicalTransportType;
+        Direction = direction;
+        CodecConfigurationLength = codecConfigurationLength;
+        CodecConfiguration = codecConfiguration;
+    }
+
+    public static ReadLocalSupportedControllerDelayCommand Parse(ref HciSpanReader r)
+    {
+        byte[] codecId = r.ReadBytes(5).ToArray();
+        byte logicalTransportType = r.ReadU8();
+        byte direction = r.ReadU8();
+        byte codecConfigurationLength = r.ReadU8();
+        return new ReadLocalSupportedControllerDelayCommand(codecId, logicalTransportType, direction,
+                                                            codecConfigurationLength, r.ReadBytes(codecConfigurationLength).ToArray());
+    }
+}
+
+#endregion 7.4 Informational Parameters
+
 #region 7.8 LE Controller commands
 // 7.8.53 LE Set Extended Advertising Parameters command
 public sealed class LeSetExtendedAdvertisingParametersV1Command : HciCommand

@@ -517,6 +517,111 @@ public class HciCommandTests
     }
     #endregion 7.3 Controller & Baseband commands (OGF: 0x03)
 
+    #region 7.4 Informational parameters (OGF: 0x04)
+    [Fact]
+    public void ReadLocalVersionInformationCommandTest()
+    {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0x1, 0x10, 0x0];
+
+        var cmd = parser.Parse(packet) as ReadLocalVersionInformationCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x1001, cmd.Opcode.Value);
+    }
+
+    [Fact]
+    public void ReadLocalSupportedCommandsCommandTest()
+    {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0x2, 0x10, 0x0];
+
+        var cmd = parser.Parse(packet) as ReadLocalSupportedCommandsCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x1002, cmd.Opcode.Value);
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x1003")]
+    public void ReadLocalSupportedFeaturesCommandTest()
+    {
+    }
+
+    [Fact]
+    public void ReadLocalExtendedFeaturesCommandTest()
+    {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0x4, 0x10, 0x1, 0x1];
+
+        var cmd = parser.Parse(packet) as ReadLocalExtendedFeaturesCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x1004, cmd.Opcode.Value);
+        Assert.Equal(1, cmd.PageNumber);
+    }
+
+    [Fact]
+    public void ReadBufferSizeCommandTest()
+    {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0x5, 0x10, 0x0];
+
+        var cmd = parser.Parse(packet) as ReadBufferSizeCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x1005, cmd.Opcode.Value);
+    }
+
+    [Fact]
+    public void ReadBdAddrCommandTest()
+    {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0x9, 0x10, 0x0];
+
+        var cmd = parser.Parse(packet) as ReadBdAddrCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x1009, cmd.Opcode.Value);
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x100A")]
+    public void ReadDataBlockSizeCommandTest()
+    {
+    }
+
+    [Fact]
+    public void ReadLocalSupportedCodecsV1CommandTest()
+    {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0xb, 0x10, 0x0];
+
+        var cmd = parser.Parse(packet) as ReadLocalSupportedCodecsV1Command;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x100B, cmd.Opcode.Value);
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x100C")]
+    public void ReadLocalSimplePairingOptionsCommandTest()
+    {
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x100D")]
+    public void ReadLocalSupportedCodecsV2CommandTest()
+    {
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x100E")]
+    public void ReadLocalSupportedCodecCapabilitiesCommandTest()
+    {
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x100F")]
+    public void ReadLocalSupportedControllerDelayCommandTest()
+    {
+    }
+    #endregion 7.4 Informational parameters (OGF: 0x04)
+
     #region 7.8 LE Controller commands (OCF: 0x08)
     [Fact]
     public void LeSetExtendedAdvertisingParametersV1CommandTest()

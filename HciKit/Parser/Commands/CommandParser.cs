@@ -88,6 +88,19 @@ internal class CommandParser
             HciOpcodes.SniffSubrating => SniffSubratingCommand.Parse(ref r),
             // 7.3 Controller & Baseband commands (OGF: 0x03)
             HciOpcodes.WriteScanEnable => WriteScanEnableCommand.Parse(ref r),
+            // 7.4 Informational Parameters (OGF: 0x04)
+            HciOpcodes.ReadLocalVersionInformation => ReadLocalVersionInformationCommand.Parse(ref r),
+            HciOpcodes.ReadLocalSupportedCommands => ReadLocalSupportedCommandsCommand.Parse(ref r),
+            HciOpcodes.ReadLocalSupportedFeatures => ReadLocalSupportedFeaturesCommand.Parse(ref r),
+            HciOpcodes.ReadLocalExtendedFeatures => ReadLocalExtendedFeaturesCommand.Parse(ref r),
+            HciOpcodes.ReadBufferSize => ReadBufferSizeCommand.Parse(ref r),
+            HciOpcodes.ReadBdAddr => ReadBdAddrCommand.Parse(ref r),
+            HciOpcodes.ReadDataBlockSize => ReadDataBlockSizeCommand.Parse(ref r),
+            HciOpcodes.ReadLocalSupportedCodecsV1 => ReadLocalSupportedCodecsV1Command.Parse(ref r),
+            HciOpcodes.ReadLocalSimplePairingOptions => ReadLocalSimplePairingOptionsCommand.Parse(ref r),
+            HciOpcodes.ReadLocalSupportedCodecsV2 => ReadLocalSupportedCodecsV2Command.Parse(ref r),
+            HciOpcodes.ReadLocalSupportedCodecCapabilities => ReadLocalSupportedCodecCapabilitiesCommand.Parse(ref r),
+            HciOpcodes.ReadLocalSupportedControllerDelay => ReadLocalSupportedControllerDelayCommand.Parse(ref r),
             // 7.8 LE Controller commands (OCF: 0x08)
             HciOpcodes.LeSetExtendedAdvertisingParametersV1 => LeSetExtendedAdvertisingParametersV1Command.Parse(ref r),
             HciOpcodes.LeSetExtendedAdvertisingEnable => LeSetExtendedAdvertisingEnableCommand.Parse(ref r),
