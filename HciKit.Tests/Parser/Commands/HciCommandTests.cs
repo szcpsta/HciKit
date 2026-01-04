@@ -653,9 +653,17 @@ public class HciCommandTests
     {
     }
 
-    [Fact(Skip = "TODO: Opcode=0x1408")]
+    [Fact]
     public void ReadEncryptionKeySizeCommandTest()
     {
+        var parser = new HciParser();
+        byte[] packet = [0x1, 0x8, 0x14, 0x2, 0x3, 0x0];
+
+        var cmd = parser.Parse(packet) as ReadEncryptionKeySizeCommand;
+
+        Assert.NotNull(cmd);
+        Assert.Equal(0x1408, cmd.Opcode.Value);
+        Assert.Equal(0x0003, cmd.ConnectionHandle);
     }
 
     [Fact(Skip = "TODO: Opcode=0x140C")]
@@ -668,6 +676,34 @@ public class HciCommandTests
     {
     }
     #endregion 7.5 Status parameters (OGF: 0x05)
+
+    #region 7.6 Testing commands (OGF: 0x06)
+    [Fact(Skip = "TODO: Opcode=0x1801")]
+    public void ReadLoopbackModeCommandTest()
+    {
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x1802")]
+    public void WriteLoopbackModeCommandTest()
+    {
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x1803")]
+    public void EnableImplementationUnderTestModeCommandTest()
+    {
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x1804")]
+    public void WriteSimplePairingDebugModeCommandTest()
+    {
+    }
+
+    [Fact(Skip = "TODO: Opcode=0x180A")]
+    public void WriteSecureConnectionsTestModeCommandTest()
+    {
+    }
+    #endregion 7.6 Testing commands (OGF: 0x06)
+
     #region 7.8 LE Controller commands (OCF: 0x08)
     [Fact]
     public void LeSetExtendedAdvertisingParametersV1CommandTest()

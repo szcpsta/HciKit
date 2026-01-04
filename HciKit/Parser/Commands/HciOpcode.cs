@@ -108,6 +108,14 @@ public static class HciOpcodes
     public const ushort SetTriggeredClockCapture = 0x140D;
     #endregion 7.5 Status Parameters
 
+    #region 7.6 Testing commands
+    public const ushort ReadLoopbackMode = 0x1801;
+    public const ushort WriteLoopbackMode = 0x1802;
+    public const ushort EnableImplementationUnderTestMode = 0x1803;
+    public const ushort WriteSimplePairingDebugMode = 0x1804;
+    public const ushort WriteSecureConnectionsTestMode = 0x180A;
+    #endregion 7.6 Testing commands
+
     #region 7.8 LE Controller commands
     public const ushort LeSetExtendedAdvertisingParametersV1 = 0x2036;
     public const ushort LeSetExtendedAdvertisingEnable = 0x2039;
