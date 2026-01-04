@@ -81,6 +81,21 @@ public static class HciOpcodes
     public const ushort WriteScanEnable = 0x0C1A;
     #endregion 7.3 Controller & Baseband commands
 
+    #region 7.4 Informational Parameters
+    public const ushort ReadLocalVersionInformation = 0x1001;
+    public const ushort ReadLocalSupportedCommands = 0x1002;
+    public const ushort ReadLocalSupportedFeatures = 0x1003;
+    public const ushort ReadLocalExtendedFeatures = 0x1004;
+    public const ushort ReadBufferSize = 0x1005;
+    public const ushort ReadBdAddr = 0x1009;
+    public const ushort ReadDataBlockSize = 0x100A;
+    public const ushort ReadLocalSupportedCodecsV1 = 0x100B;
+    public const ushort ReadLocalSimplePairingOptions = 0x100C;
+    public const ushort ReadLocalSupportedCodecsV2 = 0x100D;
+    public const ushort ReadLocalSupportedCodecCapabilities = 0x100E;
+    public const ushort ReadLocalSupportedControllerDelay = 0x100F;
+    #endregion 7.4 Informational Parameters
+
     #region 7.8 LE Controller commands
     public const ushort LeSetExtendedAdvertisingParametersV1 = 0x2036;
     public const ushort LeSetExtendedAdvertisingEnable = 0x2039;
