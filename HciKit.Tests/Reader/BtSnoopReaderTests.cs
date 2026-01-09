@@ -69,7 +69,9 @@ public class BtSnoopReaderTests
         List<BtSnoopReader.BtSnoopRecord> snoopRecords = [];
 
         var reader = new BtSnoopReader(new MemoryStream(btSnoop));
-        await foreach (var record in reader.ReadAsync())
+        long lastReport = -1;
+        var progress = new Progress<long>(v => lastReport = v);
+        await foreach (var record in reader.ReadAsync(progress))
         {
             snoopRecords.Add(record);
         }
@@ -81,5 +83,7 @@ public class BtSnoopReaderTests
             reader.GetDateTime(snoopRecords[1].TimestampMicros));
         Assert.Equal(new DateTime(2025, 8, 8, 23, 57, 13, 006, 474, DateTimeKind.Utc),
             reader.GetDateTime(snoopRecords[2].TimestampMicros));
+
+        Assert.Equal(btSnoop.Length, lastReport);
     }
 }

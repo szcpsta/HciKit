@@ -70,10 +70,14 @@ public sealed class BtSnoopReader : IDisposable, IAsyncDisposable
     }
 
     public async IAsyncEnumerable<BtSnoopRecord> ReadAsync(
+        IProgress<long>? bytesReadProgress = null,
         [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken ct = default)
     {
+        long bytesRead = 0;
+
         byte[] fileHeader = new byte[(int)FileHeaderOffset.FileHeaderLength];
         await _stream.ReadExactlyAsync(fileHeader, ct).ConfigureAwait(false);
+        bytesRead += (int)FileHeaderOffset.FileHeaderLength;
 
         if (!IsFileHeaderValid(fileHeader))
         {
@@ -87,9 +91,14 @@ public sealed class BtSnoopReader : IDisposable, IAsyncDisposable
             long recordPosition = _stream.Position;
             byte[] recordHeader = new byte[(int)PacketRecordOffset.HeaderLength];
             await _stream.ReadExactlyAsync(recordHeader, ct).ConfigureAwait(false);
+            bytesRead += (int)PacketRecordOffset.HeaderLength;
+
             int recordLength = (int)GetIncludedLength(recordHeader);
             byte[] payload = new byte[recordLength];
             await _stream.ReadExactlyAsync(payload, ct).ConfigureAwait(false);
+            bytesRead += recordLength;
+
+            bytesReadProgress?.Report(bytesRead);
 
             yield return new BtSnoopRecord(Position: recordPosition,
                                             TimestampMicros: GetTimestampMicroseconds(recordHeader),
