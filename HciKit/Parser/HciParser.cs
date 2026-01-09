@@ -26,6 +26,10 @@ public class HciParser
         {
             HciPacketType.Command => _commandParser.Parse(GetParameter(packet)),
             HciPacketType.Event => _eventParser.Parse(GetParameter(packet)),
+            HciPacketType.Acl => HciAcl.Parse(GetParameter(packet)),
+            HciPacketType.Sco => HciSco.Parse(GetParameter(packet)),
+            HciPacketType.Iso => HciIso.Parse(GetParameter(packet)),
+
             _ => new UnknownHciPacket(HciUnknownReason.UnsupportedPacketType, packetType)
         };
     }

@@ -5,15 +5,73 @@ namespace HciKit.Parser;
 
 public abstract class HciPacket
 {
+    public HciPacketType PacketType { get; }
+
+    protected HciPacket(HciPacketType packetType)
+    {
+        PacketType = packetType;
+    }
+
     public abstract string Name { get; }
 
     public override string ToString() => Name;
 }
 
+public sealed class HciAcl : HciPacket
+{
+    public override string Name => "Acl";
+
+    public byte[] Parameters { get; }
+
+    public HciAcl(byte[] parameters) : base(HciPacketType.Acl)
+    {
+        Parameters = parameters;
+    }
+
+    public static HciAcl Parse(ReadOnlySpan<byte> packet)
+    {
+        return new HciAcl(packet.ToArray());
+    }
+}
+
+public sealed class HciSco : HciPacket
+{
+    public override string Name => "Sco";
+
+    public byte[] Parameters { get; }
+
+    public HciSco(byte[] parameters) : base(HciPacketType.Sco)
+    {
+        Parameters = parameters;
+    }
+
+    public static HciSco Parse(ReadOnlySpan<byte> packet)
+    {
+        return new HciSco(packet.ToArray());
+    }
+}
+
+public sealed class HciIso : HciPacket
+{
+    public override string Name => "Iso";
+
+    public byte[] Parameters { get; }
+
+    public HciIso(byte[] parameters) : base(HciPacketType.Iso)
+    {
+        Parameters = parameters;
+    }
+
+    public static HciIso Parse(ReadOnlySpan<byte> packet)
+    {
+        return new HciIso(packet.ToArray());
+    }
+}
+
 public sealed class UnknownHciPacket : HciPacket
 {
     public HciUnknownReason Reason { get; }
-    public HciPacketType PacketType { get; }
+
     public ushort? Opcode { get; }
     public byte? EventCode { get; }
 
@@ -21,10 +79,9 @@ public sealed class UnknownHciPacket : HciPacket
         HciUnknownReason reason,
         HciPacketType packetType,
         ushort? opcode = null,
-        byte? eventCode = null)
+        byte? eventCode = null) : base(packetType)
     {
         Reason = reason;
-        PacketType = packetType;
         Opcode = opcode;
         EventCode = eventCode;
     }

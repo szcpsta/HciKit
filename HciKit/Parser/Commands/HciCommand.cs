@@ -7,7 +7,7 @@ public abstract class HciCommand : HciPacket
 {
     public HciOpcode Opcode { get; }
 
-    protected HciCommand(HciOpcode opcode)
+    protected HciCommand(HciOpcode opcode) : base(HciPacketType.Command)
     {
         Opcode = opcode;
     }
