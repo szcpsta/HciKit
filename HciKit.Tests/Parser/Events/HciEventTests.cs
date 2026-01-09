@@ -177,7 +177,8 @@ public class HciEventTests
         Assert.Equal(0x0e, evt.EventCode.Value);
         Assert.Equal(1, evt.NumHciCommandPackets);
         Assert.Equal(0x0c03, evt.CommandOpcode);
-        Assert.Equal([0], evt.ReturnParameters);
+        var r = Assert.IsType<UnknownCommandReturnParameters>(evt.ReturnParameters);
+        Assert.Equal([0], r.RawReturnParameters);
     }
 
     [Fact]

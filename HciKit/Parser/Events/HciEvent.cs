@@ -1,6 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using HciKit.Parser.Commands;
+
 namespace HciKit.Parser.Events;
 
 public abstract class HciEvent : HciPacket
@@ -348,9 +350,9 @@ public sealed class CommandCompleteEvent : HciEvent
 {
     public byte NumHciCommandPackets { get; }
     public ushort CommandOpcode { get; }
-    public byte[] ReturnParameters { get; }
+    public HciCommandReturnParameters ReturnParameters { get; }
 
-    public CommandCompleteEvent(byte numHciCommandPackets, ushort commandOpcode, byte[] returnParameters)
+    public CommandCompleteEvent(byte numHciCommandPackets, ushort commandOpcode, HciCommandReturnParameters returnParameters)
         : base(new(HciEventCodes.CommandComplete))
     {
         NumHciCommandPackets = numHciCommandPackets;
@@ -360,7 +362,39 @@ public sealed class CommandCompleteEvent : HciEvent
 
     public static CommandCompleteEvent Parse(ref HciSpanReader r)
     {
-        return new CommandCompleteEvent(r.ReadU8(), r.ReadU16(), r.RemainingSpan.ToArray());
+        byte numHciCommandPackets = r.ReadU8();
+        ushort commandOpcode = r.ReadU16();
+        byte[] rawReturnParameters = r.RemainingSpan.ToArray();
+        HciCommandReturnParameters returnParameters = ParseReturnParameters(commandOpcode, rawReturnParameters);
+        return new CommandCompleteEvent(numHciCommandPackets, commandOpcode, returnParameters);
+    }
+
+    private static HciCommandReturnParameters ParseReturnParameters(ushort commandOpcode, byte[] rawReturnParameters)
+    {
+        HciSpanReader r = new HciSpanReader(rawReturnParameters);
+        try
+        {
+            return commandOpcode switch
+            {
+                HciOpcodes.ReadLocalVersionInformation => ReadLocalVersionInformationReturnParameters.Parse(ref r),
+                HciOpcodes.ReadLocalSupportedCommands => ReadLocalSupportedCommandsReturnParameters.Parse(ref r),
+                HciOpcodes.ReadLocalSupportedFeatures => ReadLocalSupportedFeaturesReturnParameters.Parse(ref r),
+                HciOpcodes.ReadLocalExtendedFeatures => ReadLocalExtendedFeaturesReturnParameters.Parse(ref r),
+                HciOpcodes.ReadBufferSize => ReadBufferSizeReturnParameters.Parse(ref r),
+                HciOpcodes.ReadBdAddr => ReadBdAddrReturnParameters.Parse(ref r),
+                HciOpcodes.ReadDataBlockSize => ReadDataBlockSizeReturnParameters.Parse(ref r),
+                HciOpcodes.ReadLocalSupportedCodecsV1 => ReadLocalSupportedCodecsV1ReturnParameters.Parse(ref r),
+                HciOpcodes.ReadLocalSimplePairingOptions => ReadLocalSimplePairingOptionsReturnParameters.Parse(ref r),
+                HciOpcodes.ReadLocalSupportedCodecsV2 => ReadLocalSupportedCodecsV2ReturnParameters.Parse(ref r),
+                HciOpcodes.ReadLocalSupportedCodecCapabilities => ReadLocalSupportedCodecCapabilitiesReturnParameters.Parse(ref r),
+                HciOpcodes.ReadLocalSupportedControllerDelay => ReadLocalSupportedControllerDelayReturnParameters.Parse(ref r),
+                _ => new UnknownCommandReturnParameters(rawReturnParameters)
+            };
+        }
+        catch (ArgumentException)
+        {
+            return new UnknownCommandReturnParameters(rawReturnParameters);
+        }
     }
 }
 
