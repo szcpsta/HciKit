@@ -5,11 +5,11 @@ namespace HciKit.Parser;
 
 public abstract class HciPacket
 {
-    public HciPacketType PacketType { get; }
+    public HciPacketType HciPacketType { get; }
 
-    protected HciPacket(HciPacketType packetType)
+    protected HciPacket(HciPacketType hciPacketType)
     {
-        PacketType = packetType;
+        HciPacketType = hciPacketType;
     }
 
     public abstract string Name { get; }
