@@ -7,7 +7,7 @@ public abstract class HciEvent : HciPacket
 {
     public HciEventCode EventCode { get; }
 
-    protected HciEvent(HciEventCode eventCode)
+    protected HciEvent(HciEventCode eventCode) : base(HciPacketType.Event)
     {
         EventCode = eventCode;
     }
